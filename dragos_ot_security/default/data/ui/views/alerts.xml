@@ -1,0 +1,176 @@
+<dashboard version="1.1" theme="light">
+  <label>Dragos OT Security – Alerts</label>
+  <description>
+    Alert workflow view for Dragos OT security detections indexed in Splunk.
+  </description>
+
+  <!-- Header -->
+  <row>
+    <panel>
+      <html>
+        <![CDATA[
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h2 style="margin-bottom:4px;">Alerts</h2>
+            <p style="margin-top:0; color:#666;">
+              Filter, triage, and trend Dragos alert activity.
+            </p>
+          </div>
+          <img src="/static/app/dragos_ot_security/dragos_logo.png"
+               alt="Dragos"
+               style="height:42px;" />
+        </div>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+  <!-- KPIs -->
+  <row>
+    <panel>
+      <title>Active Alerts (24h)</title>
+      <single>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:alert status!=closed
+            | stats count
+          </query>
+          <earliest>-24h</earliest>
+          <latest>now</latest>
+        </search>
+      </single>
+    </panel>
+
+    <panel>
+      <title>Critical (24h)</title>
+      <single>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:alert severity="critical"
+            | stats count
+          </query>
+          <earliest>-24h</earliest>
+          <latest>now</latest>
+        </search>
+      </single>
+    </panel>
+
+    <panel>
+      <title>High (24h)</title>
+      <single>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:alert severity="high"
+            | stats count
+          </query>
+          <earliest>-24h</earliest>
+          <latest>now</latest>
+        </search>
+      </single>
+    </panel>
+
+    <panel>
+      <title>Medium/Low (24h)</title>
+      <single>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:alert severity IN ("medium","low")
+            | stats count
+          </query>
+          <earliest>-24h</earliest>
+          <latest>now</latest>
+        </search>
+      </single>
+    </panel>
+  </row>
+
+  <!-- Trends -->
+  <row>
+    <panel>
+      <title>Alerts Over Time</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:alert
+            | timechart count
+          </query>
+          <earliest>-7d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+      </chart>
+    </panel>
+
+    <panel>
+      <title>Alerts by Severity</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:alert
+            | stats count by severity
+          </query>
+          <earliest>-7d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- OT Context -->
+  <row>
+    <panel>
+      <title>Alerts by OT Protocol</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:alert
+            | stats count by protocol
+            | sort - count
+          </query>
+          <earliest>-7d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+
+    <panel>
+      <title>Alerts by Zone</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:alert
+            | stats count by zone
+            | sort - count
+          </query>
+          <earliest>-7d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- Alerts Table -->
+  <row>
+    <panel>
+      <title>Alert Triage Table</title>
+      <table>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:alert
+            | eval alert_time=coalesce(timestamp, _time)
+            | table alert_time alert_id alert_name alert_type severity confidence status protocol zone impacted_asset description recommended_action
+            | sort - alert_time
+          </query>
+          <earliest>-7d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">20</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
