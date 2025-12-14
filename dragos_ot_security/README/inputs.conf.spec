@@ -11,7 +11,9 @@ api_key = <string>
 index = <string>
 proxy = <string>
 verify_ssl = <boolean>
+timeout = <number>
 interval = <number>
+disabled = <boolean>
 
 [dragos_assets://<name>]
 description = Collect Dragos asset / inventory data
@@ -20,7 +22,9 @@ api_key = <string>
 index = <string>
 proxy = <string>
 verify_ssl = <boolean>
+timeout = <number>
 interval = <number>
+disabled = <boolean>
 
 [dragos_threat_intel://<name>]
 description = Collect Dragos adversary / threat intelligence data
@@ -29,7 +33,9 @@ api_key = <string>
 index = <string>
 proxy = <string>
 verify_ssl = <boolean>
+timeout = <number>
 interval = <number>
+disabled = <boolean>
 
 [dragos_network_telemetry://<name>]
 description = Collect Dragos summarized network / OT telemetry
@@ -38,4 +44,6 @@ api_key = <string>
 index = <string>
 proxy = <string>
 verify_ssl = <boolean>
+timeout = <number>
 interval = <number>
+disabled = <boolean>
