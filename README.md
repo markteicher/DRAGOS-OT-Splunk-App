@@ -24,8 +24,6 @@ The **Dragos OT Security for Splunk App** provides:
 - Structured indexes and sourcetypes
 - Operational visibility into OT alerts, assets, network behavior, and adversary activity
 
-This is a **full Splunk App**, not a Technology Add-on.
-
 ---
 
 ## Data Collected
