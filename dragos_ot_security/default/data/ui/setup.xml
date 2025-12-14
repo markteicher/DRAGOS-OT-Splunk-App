@@ -1,0 +1,57 @@
+<form>
+  <label>Dragos OT Security – Setup</label>
+  <description>
+    Configure Dragos API connectivity for the Dragos OT Security Splunk App.
+    This setup stores credentials securely and enables modular inputs.
+  </description>
+
+  <!-- ========================= -->
+  <!-- API Configuration -->
+  <!-- ========================= -->
+  <fieldset submitButton="true" autoRun="false">
+    <input type="text" token="base_url">
+      <label>Dragos API Base URL</label>
+      <help>
+        Example: https://portal.dragos.com/api/v1
+      </help>
+      <validation>^https://.*</validation>
+    </input>
+
+    <input type="password" token="api_key">
+      <label>Dragos API Key</label>
+      <help>
+        API key generated from the Dragos customer portal.
+        This value is stored securely using Splunk credential storage.
+      </help>
+    </input>
+
+    <input type="dropdown" token="verify_ssl">
+      <label>Verify SSL Certificates</label>
+      <choice value="true">Yes (recommended)</choice>
+      <choice value="false">No</choice>
+      <default>true</default>
+    </input>
+  </fieldset>
+
+  <!-- ========================= -->
+  <!-- Proxy Configuration -->
+  <!-- ========================= -->
+  <fieldset submitButton="false">
+    <input type="text" token="proxy">
+      <label>Proxy (Optional)</label>
+      <help>
+        Optional proxy URL (e.g. http://proxy.example.com:8080).
+        Leave blank if not required.
+      </help>
+    </input>
+  </fieldset>
+
+  <!-- ========================= -->
+  <!-- Submission -->
+  <!-- ========================= -->
+  <fieldset>
+    <input type="submit">
+      <label>Save Configuration</label>
+    </input>
+  </fieldset>
+</form>
