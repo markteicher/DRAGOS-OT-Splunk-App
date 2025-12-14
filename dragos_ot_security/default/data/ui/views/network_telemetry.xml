@@ -1,1 +1,133 @@
+<dashboard version="1.1">
+  <label>Network &amp; OT Telemetry</label>
+  <description>
+    Observed OT network behavior, protocol usage, anomalies, and zone-to-zone communications detected by Dragos.
+  </description>
 
+  <!-- HEADER WITH LOGO -->
+  <row>
+    <panel>
+      <html>
+        <![CDATA[
+        <div style="display:flex; align-items:center;">
+          <div style="flex:1;">
+            <h2>Network &amp; OT Telemetry</h2>
+            <p>Summarized operational technology network behavior and anomalies.</p>
+          </div>
+          <div>
+            <img src="/static/app/dragos_for_splunk_app/appLogo.png"
+                 alt="Dragos"
+                 style="height:50px;" />
+          </div>
+        </div>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+  <!-- HIGH-LEVEL METRICS -->
+  <row>
+    <panel>
+      <title>Total Telemetry Events</title>
+      <single>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:network
+          </query>
+        </search>
+        <option name="unit">events</option>
+      </single>
+    </panel>
+
+    <panel>
+      <title>Anomalous Communications</title>
+      <single>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:network anomaly_type=*
+          </query>
+        </search>
+        <option name="unit">anomalies</option>
+      </single>
+    </panel>
+
+    <panel>
+      <title>Unique OT Protocols</title>
+      <single>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:network
+            | stats dc(protocol)
+          </query>
+        </search>
+        <option name="unit">protocols</option>
+      </single>
+    </panel>
+  </row>
+
+  <!-- PROTOCOL DISTRIBUTION -->
+  <row>
+    <panel>
+      <title>Protocol Usage Distribution</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:network
+            | stats count by protocol
+            | sort - count
+          </query>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+
+    <panel>
+      <title>Top Anomaly Types</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:network anomaly_type=*
+            | stats count by anomaly_type
+            | sort - count
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- ZONE-TO-ZONE COMMUNICATION -->
+  <row>
+    <panel>
+      <title>Zone-to-Zone Communications</title>
+      <table>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:network
+            | stats count by zone_from zone_to protocol
+            | sort - count
+          </query>
+        </search>
+        <option name="count">15</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- RECENT ANOMALOUS TRAFFIC -->
+  <row>
+    <panel>
+      <title>Recent Anomalous Network Activity</title>
+      <table>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:network anomaly_type=*
+            | table _time src_ip dest_ip protocol port zone_from zone_to anomaly_type
+            | sort - _time
+          </query>
+        </search>
+        <option name="count">20</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
