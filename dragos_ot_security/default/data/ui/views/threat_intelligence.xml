@@ -1,1 +1,141 @@
+<dashboard version="1.1">
+  <label>Threat Intelligence</label>
+  <description>
+    Dragos threat intelligence and adversary activity surfaced in OT detections and related events.
+  </description>
 
+  <!-- HEADER WITH LOGO -->
+  <row>
+    <panel>
+      <html>
+        <![CDATA[
+        <div style="display:flex; align-items:center;">
+          <div style="flex:1;">
+            <h2>Threat Intelligence</h2>
+            <p>Adversary activity, threat families, and campaign context derived from Dragos detections.</p>
+          </div>
+          <div>
+            <img src="/static/app/dragos_for_splunk_app/appLogo.png"
+                 alt="Dragos"
+                 style="height:50px;" />
+          </div>
+        </div>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+  <!-- HIGH-LEVEL METRICS -->
+  <row>
+    <panel>
+      <title>TI Events</title>
+      <single>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:threat_intel
+            | stats count
+          </query>
+        </search>
+        <option name="unit">events</option>
+      </single>
+    </panel>
+
+    <panel>
+      <title>Unique Threat Actors</title>
+      <single>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:threat_intel threat_actor=*
+            | stats dc(threat_actor)
+          </query>
+        </search>
+        <option name="unit">actors</option>
+      </single>
+    </panel>
+
+    <panel>
+      <title>Unique Campaigns</title>
+      <single>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:threat_intel campaign=*
+            | stats dc(campaign)
+          </query>
+        </search>
+        <option name="unit">campaigns</option>
+      </single>
+    </panel>
+  </row>
+
+  <!-- TOP ACTORS / FAMILIES -->
+  <row>
+    <panel>
+      <title>Top Threat Actors</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:threat_intel threat_actor=*
+            | stats count by threat_actor
+            | sort - count
+            | head 15
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+
+    <panel>
+      <title>Top Threat Families</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:threat_intel threat_family=*
+            | stats count by threat_family
+            | sort - count
+            | head 15
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- KILL CHAIN / STAGE (IF PRESENT) -->
+  <row>
+    <panel>
+      <title>Kill Chain / Stage Distribution</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:threat_intel kill_chain_stage=*
+            | stats count by kill_chain_stage
+            | sort - count
+          </query>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- RECENT THREAT INTEL EVENTS -->
+  <row>
+    <panel>
+      <title>Recent Threat Intelligence Events</title>
+      <table>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:threat_intel
+            | table _time threat_actor campaign malware_family threat_family ics_specificity confidence associated_alerts kill_chain_stage
+            | sort - _time
+          </query>
+        </search>
+        <option name="count">20</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
