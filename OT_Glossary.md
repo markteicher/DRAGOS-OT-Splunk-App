@@ -14,8 +14,8 @@ of IT/OT integration and digital
 transformation.
 
 
-## Common Industrial Protocol
-(CIP): An industrial protocol
+## Common Industrial Protocol(CIP):
+An industrial protocol
 for industrial automation
 applications that is supported
 by the Open DeviceNet Vendors
@@ -62,8 +62,7 @@ OT cybersecurity monitoring
 and controls and appropriately
 managing OT cyber risk.
 
-## Cybersecurity Management
-System (CSMS): 
+## Cybersecurity Management System (CSMS): 
 A methodical
 approach to developing an
 ICS cybersecurity program as
@@ -85,8 +84,7 @@ volumes of real-time data. Also
 referred to as process historians
 or data loggers.
 
-##Distributed Control Systems
-(DCS): 
+## Distributed Control Systems (DCS): 
 A process control system
 that connects autonomous
 controllers, sensors and actuators
@@ -97,7 +95,9 @@ designed for reliability and unlike
 SCADA, DCS is typically controlled
 and managed on premises rather
 than remotely.
-Embedded Device: A small
+
+## Embedded Device: 
+A small
 computer system-usually
 comprised of hardware and
 software—designed to carry out
@@ -106,43 +106,62 @@ a larger computer system or
 device. ICS systems are usually
 comprised of a tapestry of
 embedded devices.
-Field Device: Industrial
+
+##Field Device: 
+Industrial
 equipment that controls actions or
 measurement. Field devices can
 include sensors, actuators, and
 valves.
-Fieldbus I/O Modules: An
-interface module between a
+
+## Fieldbus I/O Modules: 
+An interface module between a
 central processor and industrial
 machinery. They allow field input
 devices like sensors and switches
 to communicate with field output
 devices like valves, drives and
 indication lights.
-5 Critical Controls: SANS Institute
+
+## 5 Critical Controls: 
+SANS Institute
 identified five critical controls
 for organizations to align ICS/
 OT cybersecurity with their IT
 cybersecurity readiness. These
-five controls are: 1. ICS incident
-response plan, 2. A defensible
-architecture, 3. OT-specific
-visibility and monitoring, 4.
-Secure remote access, 5. Riskbased vulnerability management.
-Human Machine Interface (HMI):
+five controls are: 
+
+1. ICS incident
+response plan,
+
+2. A defensible
+architecture,
+
+3. OT-specific
+visibility and monitoring,
+
+4. Secure remote access,
+5. Risk based vulnerability management.
+
+
+## Human Machine Interface (HMI):
 A hardware or software interface
 in which an operator can interact
 with an industrial controller.
 HMIs can include everything
 from physical control panels to
 software-based dashboards.
-Industrial Automation and
-Control System (IACS): A
+
+
+## Industrial Automation and Control System (IACS): 
+A
 synonymous term for an
 industrial control system (ICS)
 used by the ISA/IEC 62443 series
 of standards.
-Industrial Control System (ICS):
+
+
+## Industrial Control System (ICS):
 A generalized term that refers to
 the broad class of systems used
 to control and monitor industrial
