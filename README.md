@@ -209,8 +209,7 @@ Run the following search to confirm ingestion:
 ---
 
 ## Directory Structure
-
-
+```
 Dragos_OT_Security_For_Splunk_App/
 ├── app.manifest
 ├── LICENSE
@@ -248,7 +247,7 @@ Dragos_OT_Security_For_Splunk_App/
 ├── appIcon.png
 └── appIcon_2x.png
 
-
+```
 ---
 
 ## Requirements
