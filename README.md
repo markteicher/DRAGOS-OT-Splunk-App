@@ -168,7 +168,6 @@ All events are stored in **JSON format**.
 This table defines the authoritative mapping between the **Dragos UI**, the
 **Dragos REST API**, and the **Splunk data ingested by this app**.
 
-It serves as the single source of truth for:
 - UI feature → API lineage
 - Dashboard and detection data provenance
 - Sourcetype ownership and expectations
