@@ -1,0 +1,136 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_notifications_deltas_executive.xml
+ Dragos OT Security for Splunk App
+ Detection Trend Deltas
+=============================================================================
+
+PURPOSE
+
+Trend analysis of Dragos OT notifications.
+
+This dashboard highlights detection volume changes using:
+- Day-over-Day (DoD)
+- Week-over-Week (WoW)
+- Month-over-Month (MoM)
+
+The intent is to answer:
+- Are detections increasing or decreasing?
+- Is risk accelerating or stabilizing?
+- Are operational controls improving over time?
+
+Data Source:
+- Dragos OT API: GET /api/v2/notifications
+- sourcetype: dragos:notifications
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Detection Trends (Executive)</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: DAY OVER DAY                                             -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Day over Day (DoD)</title>
+      <single>
+        <search>
+          <query>
+            index=* sourcetype=dragos:notifications
+            | spath updatedAt
+            | eval day=strftime(strptime(updatedAt,"%Y-%m-%dT%H:%M:%SZ"),"%Y-%m-%d")
+            | stats count as detections by day
+            | sort day
+            | streamstats current=f window=2 first(detections) as prev
+            | eval delta=detections-prev
+            | where isnotnull(prev)
+            | tail 1
+            | eval result=if(delta&gt;0,"▲ Increase",if(delta&lt;0,"▼ Decrease","▬ No Change"))
+            | table delta result
+          </query>
+        </search>
+        <option name="numberPrecision">0</option>
+        <option name="useColors">true</option>
+        <option name="colorMode">block</option>
+      </single>
+    </panel>
+
+    <!-- ============================================================= -->
+    <!-- WEEK OVER WEEK                                                -->
+    <!-- ============================================================= -->
+    <panel>
+      <title>Week over Week (WoW)</title>
+      <single>
+        <search>
+          <query>
+            index=* sourcetype=dragos:notifications
+            | spath updatedAt
+            | eval week=strftime(strptime(updatedAt,"%Y-%m-%dT%H:%M:%SZ"),"%Y-%U")
+            | stats count as detections by week
+            | sort week
+            | streamstats current=f window=2 first(detections) as prev
+            | eval delta=detections-prev
+            | where isnotnull(prev)
+            | tail 1
+            | eval result=if(delta&gt;0,"▲ Increase",if(delta&lt;0,"▼ Decrease","▬ No Change"))
+            | table delta result
+          </query>
+        </search>
+        <option name="numberPrecision">0</option>
+        <option name="useColors">true</option>
+        <option name="colorMode">block</option>
+      </single>
+    </panel>
+
+    <!-- ============================================================= -->
+    <!-- MONTH OVER MONTH                                              -->
+    <!-- ============================================================= -->
+    <panel>
+      <title>Month over Month (MoM)</title>
+      <single>
+        <search>
+          <query>
+            index=* sourcetype=dragos:notifications
+            | spath updatedAt
+            | eval month=strftime(strptime(updatedAt,"%Y-%m-%dT%H:%M:%SZ"),"%Y-%m")
+            | stats count as detections by month
+            | sort month
+            | streamstats current=f window=2 first(detections) as prev
+            | eval delta=detections-prev
+            | where isnotnull(prev)
+            | tail 1
+            | eval result=if(delta&gt;0,"▲ Increase",if(delta&lt;0,"▼ Decrease","▬ No Change"))
+            | table delta result
+          </query>
+        </search>
+        <option name="numberPrecision">0</option>
+        <option name="useColors">true</option>
+        <option name="colorMode">block</option>
+      </single>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: VISUAL CONTEXT                                           -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Detection Volume by Month</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:notifications
+            | spath updatedAt
+            | eval _time=strptime(updatedAt,"%Y-%m-%dT%H:%M:%SZ")
+            | timechart span=1mon count
+          </query>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+</dashboard>
