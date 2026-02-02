@@ -204,3 +204,92 @@ All events are stored in **JSON format**.
 ### Step 3: Verify Data Collection
 
 Run the following search to confirm ingestion:
+
+
+---
+
+## Directory Structure
+
+
+Dragos_OT_Security_For_Splunk_App/
+├── app.manifest
+├── LICENSE
+├── README.md
+├── default/
+│   ├── app.conf
+│   ├── inputs.conf
+│   ├── props.conf
+│   ├── transforms.conf
+│   ├── macros.conf
+│   ├── restmap.conf
+│   ├── savedsearches.conf
+│   ├── web.conf
+│   └── data/
+│       └── ui/
+│           ├── nav/
+│           │   └── default.xml
+│           └── views/
+│               ├── setup.xml
+│               ├── dragos_overview.xml
+│               ├── dragos_alerts.xml
+│               ├── dragos_assets.xml
+│               ├── dragos_network.xml
+│               ├── dragos_threat_intel.xml
+│               ├── dragos_reports.xml
+│               └── dragos_help.xml
+├── bin/
+│   ├── dragos_input.py
+│   ├── dragos_setup_handler.py
+│   └── dragos_validation.py
+├── metadata/
+│   ├── default.meta
+│   └── local.meta
+└── static/
+├── appIcon.png
+└── appIcon_2x.png
+
+
+---
+
+## Requirements
+
+- Splunk Enterprise or Splunk Cloud (Classic Experience)
+- Network connectivity to Dragos platform
+- Valid Dragos API credentials
+- Operational Dragos deployment
+
+---
+
+## AppInspect Compliance
+
+- Standard Splunk app directory structure
+- Inputs disabled by default
+- Secure credential handling
+- No hardcoded secrets
+- JSON-based ingestion
+- MIT License
+
+---
+
+## References
+
+- Dragos product documentation  
+  https://www.dragos.com
+
+- Dragos API documentation  
+  https://portal.dragos.com/api/v1/doc/index.html
+
+- Splunk documentation  
+  https://docs.splunk.com
+
+---
+
+## MIT License
+
+Copyright (c) 2026 Mark Teicher
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software.
