@@ -1,0 +1,150 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_documentation.xml
+ Dragos OT Security for Splunk App
+ Documentation Hub
+=============================================================================
+
+PURPOSE
+
+Centralized documentation hub for Dragos OT Security concepts, APIs, and
+Splunk App usage. This view provides direct links to authoritative
+Dragos documentation and key references used by this app.
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Documentation</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: CORE DOCUMENTATION                                       -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Dragos OT Security Documentation</title>
+      <html>
+        <![CDATA[
+        <ul>
+          <li>
+            <a href="https://www.dragos.com/platform/" target="_blank">
+              Dragos Platform Overview
+            </a>
+          </li>
+          <li>
+            <a href="https://portal.dragos.com" target="_blank">
+              Dragos Customer Portal
+            </a>
+          </li>
+          <li>
+            <a href="https://portal.dragos.com/api/v1/doc/index.html" target="_blank">
+              Dragos Platform API Documentation
+            </a>
+          </li>
+        </ul>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: API REFERENCES                                           -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>API Reference</title>
+      <html>
+        <![CDATA[
+        <ul>
+          <li>
+            <a href="https://portal.dragos.com/api/v1/doc/index.html" target="_blank">
+              Component API Documentation Index
+            </a>
+          </li>
+          <li>
+            <a href="https://portal.dragos.com/api/v1/doc/auth/docs/index.html" target="_blank">
+              Authentication Management API
+            </a>
+          </li>
+          <li>
+            <a href="https://portal.dragos.com/api/v1/doc/assets/docs/index.html" target="_blank">
+              Asset Inventory API
+            </a>
+          </li>
+          <li>
+            <a href="https://portal.dragos.com/api/v1/doc/vulnerabilities/docs/index.html" target="_blank">
+              Vulnerabilities API
+            </a>
+          </li>
+        </ul>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: OPERATIONS & ANALYSIS                                    -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Operations & Analysis</title>
+      <html>
+        <![CDATA[
+        <ul>
+          <li>
+            <a href="https://portal.dragos.com/api/v1/doc/detections/docs/index.html" target="_blank">
+              Detection Management
+            </a>
+          </li>
+          <li>
+            <a href="https://portal.dragos.com/api/v1/doc/reports/docs/index.html" target="_blank">
+              Reports and Metrics
+            </a>
+          </li>
+          <li>
+            <a href="https://portal.dragos.com/api/v1/doc/notifications/docs/index.html" target="_blank">
+              Notifications
+            </a>
+          </li>
+          <li>
+            <a href="https://portal.dragos.com/api/v1/doc/taskings/docs/index.html" target="_blank">
+              Tasking and Operations
+            </a>
+          </li>
+        </ul>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 4: SPLUNK REFERENCES                                        -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Splunk References</title>
+      <html>
+        <![CDATA[
+        <ul>
+          <li>
+            <a href="https://docs.splunk.com/Documentation/Splunk/latest/Viz/XMLDashboardReference" target="_blank">
+              Splunk Classic XML Dashboard Reference
+            </a>
+          </li>
+          <li>
+            <a href="https://docs.splunk.com/Documentation/Splunk/latest/Admin/Propsconf" target="_blank">
+              props.conf Reference
+            </a>
+          </li>
+          <li>
+            <a href="https://docs.splunk.com/Documentation/Splunk/latest/Admin/Transformsconf" target="_blank">
+              transforms.conf Reference
+            </a>
+          </li>
+        </ul>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+</dashboard>
