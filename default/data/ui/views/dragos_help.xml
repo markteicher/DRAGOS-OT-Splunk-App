@@ -1,0 +1,131 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_help.xml
+ Dragos OT Security for Splunk App
+ Help & Documentation
+=============================================================================
+
+PURPOSE
+
+Provides in-app help, documentation links, and operational guidance for
+users of the Dragos OT Security for Splunk App.
+
+This view centralizes references to Dragos OT documentation, API
+references, and Splunk app usage information to support analysts,
+engineers, and administrators.
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Help</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: GETTING STARTED                                          -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Getting Started</title>
+      <html>
+        <![CDATA[
+        <p>
+          The Dragos OT Security for Splunk App integrates Dragos OT
+          platform data directly into Splunk for monitoring, analysis,
+          and investigation of operational technology environments.
+        </p>
+        <ul>
+          <li>Ensure the Dragos OT platform API is reachable from Splunk</li>
+          <li>Complete the setup wizard to configure connectivity</li>
+          <li>Verify data ingestion using the Overview dashboard</li>
+        </ul>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: DRAGOS DOCUMENTATION                                     -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Dragos Documentation</title>
+      <html>
+        <![CDATA[
+        <ul>
+          <li>
+            <a href="https://portal.dragos.com" target="_blank">
+              Dragos Customer Portal
+            </a>
+          </li>
+          <li>
+            <a href="https://portal.dragos.com/api/v1/doc/index.html" target="_blank">
+              Dragos Platform API Documentation
+            </a>
+          </li>
+          <li>
+            <a href="https://portal.dragos.com/support" target="_blank">
+              Dragos Support Resources
+            </a>
+          </li>
+        </ul>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: SPLUNK APP USAGE                                         -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Splunk App Usage</title>
+      <html>
+        <![CDATA[
+        <ul>
+          <li>
+            Use <strong>Dashboards</strong> to review overall OT security posture
+          </li>
+          <li>
+            Use <strong>Inventory</strong> to analyze OT assets and attributes
+          </li>
+          <li>
+            Use <strong>Vulnerabilities</strong> to review identified OT exposures
+          </li>
+          <li>
+            Use <strong>TDIR</strong> for threat detection and incident response data
+          </li>
+          <li>
+            Use <strong>Logs</strong> to review audit and operational events
+          </li>
+          <li>
+            Use <strong>Reports</strong> for executive and operational summaries
+          </li>
+        </ul>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 4: SUPPORT                                                  -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Support</title>
+      <html>
+        <![CDATA[
+        <p>
+          For Dragos OT product support, contact Dragos through your
+          existing support agreements and channels.
+        </p>
+        <p>
+          For Splunk platform assistance, refer to:
+          <a href="https://docs.splunk.com" target="_blank">
+            Splunk Documentation
+          </a>
+        </p>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+</dashboard>
