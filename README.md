@@ -163,6 +163,51 @@ All events are stored in **JSON format**.
 
 ---
 
+## UI → API → Splunk Data Mapping (Authoritative Reference)
+
+This table defines the authoritative mapping between the **Dragos UI**, the
+**Dragos REST API**, and the **Splunk data ingested by this app**.
+
+It serves as the single source of truth for:
+- UI feature → API lineage
+- Dashboard and detection data provenance
+- Sourcetype ownership and expectations
+
+All mappings are derived from the Dragos Platform Developer Guide.
+
+
+| Dragos UI Area | UI Functionality | API Endpoint(s) | HTTP Method | Splunk Sourcetype | Primary Fields Ingested |
+|---------------|------------------|-----------------|-------------|-------------------|-------------------------|
+| Overview | Platform posture summary | `/api/v1/alerts` | GET | `dragos:alerts` | severity, confidence, status |
+| Overview | Asset population summary | `/api/v1/assets` | GET | `dragos:assets` | asset_id, criticality |
+| Alerts / Detections | Active threat detections | `/api/v1/alerts` | GET | `dragos:alerts` | alert_id, threat_family, impacted_assets |
+| Alerts / Detections | Alert lifecycle state | `/api/v1/alerts/{id}` | GET | `dragos:alerts` | acknowledged, resolved, timestamps |
+| Assets | OT asset inventory | `/api/v1/assets` | GET | `dragos:assets` | ip, mac, vendor, model |
+| Assets | Asset metadata | `/api/v1/assets/{id}` | GET | `dragos:assets` | zone, site, first_seen, last_seen |
+| Vulnerabilities | Vulnerability inventory | `/api/v1/vulnerabilities` | GET | `dragos:vulnerabilities` | vuln_id, severity, cve |
+| Vulnerabilities | Asset vulnerability mapping | `/api/v1/vulnerabilities/assets` | GET | `dragos:vulnerabilities` | asset_id, vuln_id |
+| Vulnerabilities | Vulnerability details | `/api/v1/vulnerabilities/{id}` | GET | `dragos:vulnerabilities` | description, remediation |
+| Network Activity | OT communications | `/api/v1/communications` | GET | `dragos:network` | protocol, src, dst |
+| Network Activity | Protocol usage | `/api/v1/protocols` | GET | `dragos:network` | protocol_name, volume |
+| Network Activity | Anomalies | `/api/v1/anomalies` | GET | `dragos:network` | anomaly_type, severity |
+| Threat Intelligence | Adversary profiles | `/api/v1/adversaries` | GET | `dragos:threatintel` | name, motivation |
+| Threat Intelligence | Campaigns | `/api/v1/campaigns` | GET | `dragos:threatintel` | campaign_name, start_date |
+| Threat Intelligence | Malware families | `/api/v1/malware` | GET | `dragos:threatintel` | family, behavior |
+| Threat Intelligence | Kill chain mapping | `/api/v1/threats` | GET | `dragos:threatintel` | stage, confidence |
+| Reporting | Historical alert trends | `/api/v1/alerts` | GET | `dragos:alerts` | timestamps, severity |
+| Reporting | Vulnerability trends | `/api/v1/vulnerabilities` | GET | `dragos:vulnerabilities` | severity, discovery_date |
+| Operations | Platform version | `/api/v1/version` | GET | `dragos:meta` | version, build |
+| Operations | System health | `/api/v1/status` | GET | `dragos:meta` | uptime, component_state |
+
+---
+
+### Notes
+
+- All data is ingested as **raw JSON** to preserve fidelity.
+- No UI scraping is performed; **all data originates from documented APIs**.
+- Dashboards, detections, and executive views are built exclusively from these sourcetypes.
+- Vulnerabilities are treated as **first-class security data**, not derivative artifacts.
+
 ## Dashboards
 
 | Dashboard | Description |
