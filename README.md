@@ -10,13 +10,9 @@ Dragos continuously analyzes OT assets, communications, and threats without disr
 
 The **Dragos OT Security for Splunk App** is a single Splunk application that ingests telemetry, alerts, detections, asset inventory, network activity, and threat intelligence from a Dragos platform using the **Dragos REST API**.
 
-Data is ingested into a user-specified Splunk index and assigned explicit sourcetypes per dataset. All data is stored in **raw JSON format** to preserve fidelity, structure, and future extensibility.
-
-The Splunk App provides dashboards, reports, and search logic for analyzing Dragos OT security data directly within Splunk.
+Data is ingested into a user-specified Splunk index and assigned explicit sourcetypes per dataset. All data is stored in **raw JSON format** .
 
 This includes OT alerts and detections, asset inventory, network protocol activity, threat intelligence, and adversary context.
-
-Data retrieved from Dragos can also be leveraged by Splunk users to build custom searches, reports, detections, correlation rules, and incident response workflows.
 
 The Splunk App is intended to surface Dragos OT data directly inside Splunk so that **SOC teams, OT security engineers, asset owners, and leadership** can monitor and analyze OT risk without requiring direct access to the Dragos user interface.
 
@@ -43,8 +39,6 @@ https://portal.dragos.com/api/v1/doc/index.html
 ## Supported Operating Environments
 
 Dragos is designed specifically for **Operational Technology (OT)** and **Industrial Control System (ICS)** environments.
-
-The Dragos OT Security for Splunk App reflects this scope and focuses on ingesting and analyzing OT-relevant data only.
 
 ---
 
@@ -143,11 +137,6 @@ Protocol-level telemetry and detections are ingested into Splunk via this app.
 
 The Dragos OT Security for Splunk App retrieves data from Dragos using the Dragos REST API.
 
-Data is ingested into a Splunk index specified during configuration.
-
-Each dataset is assigned a predefined sourcetype to ensure consistent parsing, searching, and dashboard functionality.
-
-All events are stored in **JSON format**.
 
 ---
 
@@ -163,14 +152,12 @@ All events are stored in **JSON format**.
 
 ---
 
-## UI → API → Splunk Data Mapping (Authoritative Reference)
+## UI → API → Splunk Data Mapping (Reference)
 
-This table defines the authoritative mapping between the **Dragos UI**, the
-**Dragos REST API**, and the **Splunk data ingested by this app**.
 
-- UI feature → API lineage
+- User Interface feature → API lineage
 - Dashboard and detection data provenance
-- Sourcetype ownership and expectations
+- Sourcetype
 
 All mappings are derived from the Dragos Platform Developer Guide.
 
@@ -200,12 +187,6 @@ All mappings are derived from the Dragos Platform Developer Guide.
 
 ---
 
-### Notes
-
-- All data is ingested as **raw JSON** to preserve fidelity.
-- No UI scraping is performed; **all data originates from documented APIs**.
-- Dashboards, detections, and executive views are built exclusively from these sourcetypes.
-- Vulnerabilities are treated as **first-class security data**, not derivative artifacts.
 
 ## Dashboards
 
