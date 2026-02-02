@@ -1,0 +1,88 @@
+<!--
+=============================================================================
+ default/data/ui/nav/default.xml
+ Dragos OT Security for Splunk App
+ 
+=============================================================================
+
+PURPOSE
+
+Defines the primary navigation structure for the Dragos OT Security
+for Splunk App.
+
+
+This file defines navigation only.
+=============================================================================
+-->
+
+<nav search_view="dragos_overview" color="#2c3e50">
+
+  <!-- Insights -->
+  <collection label="Insights">
+    <view name="dragos_insights"/>
+  </collection>
+
+  <!-- Dashboards -->
+  <collection label="Dashboards">
+    <view name="dragos_overview"/>
+  </collection>
+
+  <!-- Inventory -->
+  <collection label="Inventory">
+    <view name="dragos_inventory"/>
+  </collection>
+
+  <!-- Vulnerabilities -->
+  <collection label="Vulns">
+    <view name="dragos_vulnerabilities"/>
+  </collection>
+
+  <!-- Threat Detection & Incident Response -->
+  <collection label="TDIR">
+    <view name="dragos_tdir"/>
+  </collection>
+
+  <!-- Map -->
+  <collection label="Map">
+    <view name="dragos_map"/>
+  </collection>
+
+  <!-- Admin -->
+  <collection label="Admin">
+    <view name="dragos_admin"/>
+    <view name="dragos_users"/>
+    <view name="dragos_roles"/>
+  </collection>
+
+  <!-- Baselines -->
+  <collection label="Baselines">
+    <view name="dragos_baselines"/>
+  </collection>
+
+  <!-- Data -->
+  <collection label="Data">
+    <view name="dragos_data_ingestion"/>
+  </collection>
+
+  <!-- EV -->
+  <collection label="EV">
+    <view name="dragos_ev"/>
+  </collection>
+
+  <!-- Logs -->
+  <collection label="Logs">
+    <view name="dragos_audit_logs"/>
+    <view name="dragos_error_logs"/>
+  </collection>
+
+  <!-- Reports -->
+  <collection label="Reports">
+    <view name="dragos_reports"/>
+  </collection>
+
+  <!-- Help -->
+  <collection label="Help">
+    <view name="dragos_help"/>
+  </collection>
+
+</nav>
