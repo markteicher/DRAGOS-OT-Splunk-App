@@ -187,6 +187,84 @@ All mappings are derived from the Dragos Platform Developer Guide.
 
 ---
 
+## Appendix A — Component API Documentation Pages
+
+All paths are relative to the root path of the SiteStore URL  
+(for example: `https://<hostname>/`)
+
+| Component API | Documentation Path | API Path |
+|--------------|--------------------|---------|
+| Asset Inventory | /assets/docs/index.html | /assets/api/v4/ |
+| Asset Maps | /maps/docs/index.html | /maps/api/v1/ |
+| Authentication Management | /auth/docs/index.html | /auth/api/v1/ |
+| Baselines | /baselines/docs/index.html | /baselines/api/v3/ |
+| Case Management | /cases/docs/index.html | /cases/ |
+| Data Import Service | /ddis/docs/index.html | /ddis/api/v1/ |
+| Detection Management | /detections/docs/index.html | /detections/api/v1/ |
+| Files | /files/docs/index.html | /files/api/v1/ |
+| Node Management Service | /nodes/docs/v1/index.html | /nodes/api/v1/ |
+| Notifications | /notifications/docs/index.html | /api/v2/notification |
+| Reports | /reports/docs/index.html | /reports/api/v2/ |
+| Taskings | /taskings/docs/index.html | /taskings/api/v1/ |
+| Vulnerabilities | /vulnerabilities/docs/index.html | /vulnerabilities/api/v1/ |
+
+---
+
+## Appendix B — Privileges
+
+| Name | Consolidated Legacy Privileges | Description |
+|-----|-------------------------------|-------------|
+| admin | Admin | Allow usage of various admin pages and services. |
+| analytic:beta:read | AnalyticBeta | Allow reading of beta analytic list and details. |
+| analytic:read | AnalyticRead | Allow reading of analytic list and details. |
+| analytic:manage | AnalyticCreate<br>AnalyticDelete<br>AnalyticRestart<br>AnalyticRun<br>AnalyticUpdate | Allow creating, updating, deleting, and manually running of analytics. |
+| asset:delete | AssetDelete | Allow deleting of assets. |
+| asset:map | AssetSnapshotCreate<br>AssetSnapshotDelete<br>AssetSnapshotRead | Allow generating and reading of asset maps. |
+| asset:read | AssetRead | Allow reading of assets. |
+| asset:write | AssetWrite | Allow updating, importing, and merging of assets. |
+| auth:provider:manage | — | Manage authentication providers. |
+| auth:identity:manage | — | Manage identity accounts. |
+| auth:identity:read | — | Read identity accounts. |
+| auth:role:manage | — | Manage identity roles. |
+| baseline:config | BaselineAdmin | Allow reading of baseline metadata information. |
+| baseline:read | BaselineRead | Allow reading of baseline metadata information. |
+| baseline:update | BaselineUpdate | Allow changes to the baseline itself (add/remove to/from baseline). |
+| case:admin | CaseAdmin | Administrative access over all cases. |
+| case:create | CaseCreate | Allow creation of cases. |
+| case:read | CaseRead | Allow reading of cases. |
+| detection:manage | DetectionCatalogConfigRead<br>DetectionCatalogConfigUpdate<br>DetectionCatalogCreate<br>DetectionCatalogDelete<br>DetectionCatalogRead<br>DetectionCreate<br>DetectionDelete<br>DetectionUpdate | Manage detections. |
+| detection:read | DetectionRead | Allow reading of detections. |
+| file:delete | FileDelete | Allow deleting files. |
+| file:packetcapture:download | PacketCaptureDownload | Allow downloading of packet capture (PCAP) files. |
+| file:packetcapture:metadata:update | PacketCaptureMetadataUpdate | Allow update of metadata for packet capture (PCAP) files. |
+| file:upload | FileCreate | Allow uploading files. |
+| misc:jupyterhub | JupyterhubAccess | Allows logging in to the Jupyterhub environment. |
+| network:manage | NetworkCreate<br>NetworkDelete<br>NetworkMetadataUpdate | Allow creating, updating, and deleting of networks. |
+| network:read | NetworkRead | Allow reading of networks. |
+| notification:read | NotificationRead | Allow reading of notifications (not including system notifications). |
+| notification:rule:manage | NotificationCreationRuleActionCreate<br>NotificationCreationRuleActionDelete<br>NotificationCreationRuleActionUpdate<br>NotificationCreationRuleCreate<br>NotificationCreationRuleDelete<br>NotificationCreationRuleUpdate<br>NotificationCreationRuleWithDrop | Allow management of notification rules and actions. |
+| notification:rule:read | NotificationCreationRuleActionRead | Allow reading of notification rules and actions. |
+| notification:system:read | NotificationSystemType | Allow reading of system notifications. |
+| notification:update | NotificationUpdate | Allow updating of notifications. |
+| playbook:admin | PlaybookAdmin | Administrative access over all playbooks. |
+| playbook:create | PlaybookCreate | Create a new playbook. |
+| playbook:read | PlaybookRead | Allow reading of playbooks. |
+| report:delete | ReportDelete | Allow deleting reports. |
+| report:read | ReportRead | Allow reading of reports. |
+| report:write | ReportWrite | Allow creating and updating of reports. |
+| sensor:manage | CollectorDelete<br>CollectorMetadataUpdate<br>MidpointDelete<br>MidpointMetadataUpdate<br>SensorPairing | Allow updating and deleting of sensors and collectors. |
+| sensor:read | CollectorRead<br>MidpointRead | Allow reading of sensors and collectors. |
+| tasking:capture:create | TaskingCreate | Allow creation of capture taskings. |
+| tasking:contentpack:create | TaskingContentPackCreate | Allow creation of Content Pack deployment taskings. |
+| tasking:delete | TaskingDelete | Allow deletion of taskings. |
+| tasking:read | TaskingRead | Allow reading of taskings. |
+| vulnerability:read | VulnerabilityRead<br>VulnerabilityDetectionRead | Allow reading vulnerabilities and detections. |
+| vulnerability:log:read | VulnerabilityManagementAuditLogRead | Allow reading of vulnerability audit logs. |
+| vulnerability:rule:manage | VulnerabilityDetectionRuleCreate<br>VulnerabilityDetectionRuleUpdate<br>VulnerabilityDetectionRuleDelete | Allow creating, updating, and deleting of vulnerability detection rules. |
+| vulnerability:rule:read | VulnerabilityDetectionRuleRead | Allow reading of vulnerability detection rules. |
+| vulnerability:update | VulnerabilityDetectionUpdate | Allow updating state of vulnerability detections. |
+
+---
 
 ## Dashboards
 
