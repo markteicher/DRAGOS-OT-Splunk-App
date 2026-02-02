@@ -1,0 +1,104 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_error_logs.xml
+ Dragos OT Security for Splunk App
+ Error Logs
+=============================================================================
+
+PURPOSE
+
+Displays Dragos platform error and operational failure events ingested into
+Splunk. This view is intended for troubleshooting, operational monitoring,
+and support workflows.
+
+Data source:
+- Dragos platform operational and error logs
+- sourcetype: dragos:logs:error
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Error Logs</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: ERROR VOLUME                                             -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Error Events (Last 24h)</title>
+      <single>
+        <search>
+          <query>
+            index=* sourcetype=dragos:logs:error earliest=-24h
+            | stats count
+          </query>
+        </search>
+        <option name="useColors">true</option>
+        <option name="colorMode">block</option>
+      </single>
+    </panel>
+
+    <panel>
+      <title>Error Events Over Time</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:logs:error
+            | timechart span=1h count
+          </query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.legend.placement">bottom</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: ERROR TYPES                                              -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Errors by Type</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:logs:error
+            | stats count by error_type
+            | sort - count
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: RECENT ERROR EVENTS                                      -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Recent Error Events</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:logs:error
+            | sort - _time
+            | table
+                _time
+                level
+                error_type
+                message
+                component
+                service
+            | head 50
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
