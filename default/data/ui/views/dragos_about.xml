@@ -1,0 +1,116 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_about.xml
+ Dragos OT Security for Splunk App
+ About
+=============================================================================
+
+PURPOSE
+
+Provides application metadata, versioning information, and references
+for the Dragos OT Security for Splunk App. This view is informational only.
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>About</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: APPLICATION INFORMATION                                  -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Application Information</title>
+      <html>
+        <![CDATA[
+        <table>
+          <tr><td><strong>Application</strong></td><td>Dragos OT Security for Splunk App</td></tr>
+          <tr><td><strong>Purpose</strong></td><td>Operational visibility and analysis of Dragos OT Security data within Splunk</td></tr>
+          <tr><td><strong>Integration Type</strong></td><td>REST API ingestion</td></tr>
+          <tr><td><strong>Data Format</strong></td><td>JSON</td></tr>
+          <tr><td><strong>Splunk Compatibility</strong></td><td>Splunk Enterprise / Splunk Cloud</td></tr>
+        </table>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: VERSIONING                                               -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Version Information</title>
+      <html>
+        <![CDATA[
+        <table>
+          <tr><td><strong>App Version</strong></td><td>1.0.0</td></tr>
+          <tr><td><strong>Dragos API Version</strong></td><td>v1</td></tr>
+          <tr><td><strong>Build Type</strong></td><td>Single App (TA + UI)</td></tr>
+        </table>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: ATTRIBUTION                                              -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Attribution & Licensing</title>
+      <html>
+        <![CDATA[
+        <p>
+          Dragos is a registered trademark of Dragos, Inc.
+        </p>
+        <p>
+          This Splunk App is an independent integration and is not an official
+          Dragos product unless explicitly stated otherwise.
+        </p>
+        <p>
+          Use of the Dragos OT Security platform is governed by the applicable
+          Dragos license agreement.
+        </p>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 4: REFERENCES                                               -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>References</title>
+      <html>
+        <![CDATA[
+        <ul>
+          <li>
+            <a href="https://www.dragos.com" target="_blank">
+              Dragos Website
+            </a>
+          </li>
+          <li>
+            <a href="https://portal.dragos.com" target="_blank">
+              Dragos Customer Portal
+            </a>
+          </li>
+          <li>
+            <a href="https://portal.dragos.com/api/v1/doc/index.html" target="_blank">
+              Dragos Platform API Documentation
+            </a>
+          </li>
+          <li>
+            <a href="https://docs.splunk.com" target="_blank">
+              Splunk Documentation
+            </a>
+          </li>
+        </ul>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+</dashboard>
