@@ -8,7 +8,7 @@ Dragos provides deep visibility into OT networks by monitoring industrial protoc
 
 Dragos continuously analyzes OT assets, communications, and threats without disrupting industrial processes. The platform is engineered to operate safely in sensitive environments where availability, safety, and reliability are paramount.
 
-The **Dragos OT Security for Splunk App** is a single Splunk application that ingests telemetry, alerts, detections, asset inventory, network activity, and threat intelligence from a Dragos platform using the **Dragos REST API**.
+The **Dragos OT Security for Splunk App** is a single Splunk application that leverages an easy to use Splunk Setup Wizard to provide operational telemetry, alerts, detections, asset inventory, network activity, and threat intelligence from a Dragos platform using the **Dragos REST API**.
 
 Data is ingested into a user-specified Splunk index and assigned explicit sourcetypes per dataset. All data is stored in **raw JSON format** .
 
@@ -139,6 +139,7 @@ Dragos supports visibility across a wide range of OT environments, including:
 
 ### Network & OT Telemetry
 
+- operational telemetry
 - protocol usage
 - anomalous communications
 - unexpected connections
@@ -164,18 +165,6 @@ Dragos supports visibility across a wide range of OT environments, including:
 
 The Dragos OT Security for Splunk App retrieves data from Dragos using the Dragos REST API.
 
-
----
-
-## Supported Sourcetypes
-
-| Sourcetype | Description |
-|-----------|-------------|
-| dragos:alerts | OT alerts and detections |
-| dragos:assets | OT asset inventory |
-| dragos:network | Network and protocol telemetry |
-| dragos:threat_intel | Threat intelligence and adversary data |
-| dragos:system | Dragos platform operational logs |
 
 ---
 
@@ -237,7 +226,7 @@ All paths are relative to the root path of the SiteStore URL
 
 ---
 
-## Appendix B — Privileges
+## Roles and Permissions
 
 | Name | Consolidated Legacy Privileges | Description |
 |-----|-------------------------------|-------------|
