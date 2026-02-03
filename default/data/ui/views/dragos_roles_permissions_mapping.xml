@@ -1,0 +1,58 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_roles_permissions_mapping.xml
+ Dragos OT Security for Splunk App
+ Roles & Permissions Mapping (Appendix B)
+=============================================================================
+
+PURPOSE
+
+Provides an authoritative, in-app reference table mapping Dragos platform
+roles to their permitted capabilities. This view directly represents
+Appendix B (Privileges) from the Dragos documentation.
+
+This dashboard is informational only and contains no SPL, metrics,
+aggregation, inference, or logic.
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Roles & Permissions Mapping</label>
+
+  <row>
+    <panel>
+      <title>Dragos Platform Privileges by Role</title>
+      <html>
+        <![CDATA[
+        <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+          <tr>
+            <th>Privilege / Capability</th>
+            <th>Viewer</th>
+            <th>Analyst</th>
+            <th>Administrator</th>
+          </tr>
+          <tr><td>View dashboards</td><td>✅</td><td>✅</td><td>✅</td></tr>
+          <tr><td>View assets</td><td>✅</td><td>✅</td><td>✅</td></tr>
+          <tr><td>View detections / notifications</td><td>✅</td><td>✅</td><td>✅</td></tr>
+          <tr><td>View vulnerabilities</td><td>✅</td><td>✅</td><td>✅</td></tr>
+          <tr><td>View threat intelligence</td><td>✅</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Export data</td><td>❌</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Acknowledge / review notifications</td><td>❌</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Change notification state</td><td>❌</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Suppress detections</td><td>❌</td><td>❌</td><td>✅</td></tr>
+          <tr><td>Configure notifications</td><td>❌</td><td>❌</td><td>✅</td></tr>
+          <tr><td>Manage assets</td><td>❌</td><td>❌</td><td>✅</td></tr>
+          <tr><td>Manage users</td><td>❌</td><td>❌</td><td>✅</td></tr>
+          <tr><td>Assign roles</td><td>❌</td><td>❌</td><td>✅</td></tr>
+          <tr><td>Configure integrations</td><td>❌</td><td>❌</td><td>✅</td></tr>
+          <tr><td>API access (read)</td><td>❌</td><td>✅</td><td>✅</td></tr>
+          <tr><td>API access (write)</td><td>❌</td><td>❌</td><td>✅</td></tr>
+          <tr><td>System configuration</td><td>❌</td><td>❌</td><td>✅</td></tr>
+        </table>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+</dashboard>
