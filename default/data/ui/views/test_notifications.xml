@@ -1,0 +1,131 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_notifications.xml
+ Dragos OT Security for Splunk App
+ Notifications (All Severities)
+=============================================================================
+
+PURPOSE
+
+Displays all notification records retrieved from the Dragos Platform.
+
+This view represents raw notification detections exactly as returned by
+the Dragos Notifications API.
+
+This view intentionally retrieves ALL notifications across
+ALL severities.
+
+DATA SOURCE
+
+- /api/v2/notifications
+  → sourcetype=dragos:notifications
+
+
+Top-level fields:
+- id
+- source
+- reviewed
+- state
+- retained
+- type
+- severity
+- summary
+- content
+- updatedAt
+- firstSeenAt
+- lastSeenAt
+- count
+
+Nested fields:
+
+endpoints[]:
+- endpoints.asset.id
+- endpoints.roles[]
+
+detection:
+- detection.id
+- detection.detectionQuads[]
+- detection.threatInfo[]
+- detection.intelReports[]
+
+NOTES
+
+- No filtering
+- No aggregation
+- No inference
+- No enrichment
+- Explicit JSON parsing only
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Notifications</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: NOTIFICATION RECORDS                                    -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>All Notifications</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:notifications
+            | spath
+            | table
+                id
+                source
+                reviewed
+                state
+                retained
+                type
+                severity
+                summary
+                content
+                updatedAt
+                firstSeenAt
+                lastSeenAt
+                count
+                detection.id
+                detection.detectionQuads
+                detection.threatInfo
+                detection.intelReports
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+        <option name="count">50</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: ENDPOINTS                                               -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Notification Endpoints</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:notifications
+            | spath
+            | mvexpand endpoints
+            | spath input=endpoints
+            | rename asset.id as endpoint_asset_id
+            | table
+                id
+                severity
+                endpoint_asset_id
+                roles
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+        <option name="count">50</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
