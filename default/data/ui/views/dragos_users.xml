@@ -1,1 +1,56 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_users.xml
+ Dragos OT Security for Splunk App
+ Users
+=============================================================================
 
+PURPOSE
+
+Displays all user accounts retrieved from the Dragos Platform using the
+Dragos REST API.
+
+Data Source:
+- GET /api/v2/users
+
+This view surfaces user identity, access attributes, role assignments,
+authentication method, and account activity timestamps exactly as returned
+by the Dragos API.
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Users</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: USER ACCOUNTS                                           -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>User Accounts</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:users
+            | spath
+            | table
+                id
+                username
+                email
+                fullName
+                roles{}
+                enabled
+                ssoEnabled
+                createdAt
+                lastLoginAt
+                lastLoginIp
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
