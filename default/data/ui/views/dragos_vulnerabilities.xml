@@ -2,7 +2,7 @@
 =============================================================================
  default/data/ui/views/dragos_vulnerabilities.xml
  Dragos OT Security for Splunk App
- Vulnerabilities
+ Vulnerabilities — Hardware & Firmware
 =============================================================================
 
 PURPOSE
@@ -12,18 +12,49 @@ using the Dragos REST API endpoint:
 
   GET /api/v1/vulnerabilities?expand=asset,report
 
+DATA SOURCE
+
+/api/v1/vulnerabilities
+→ sourcetype=dragos:vulnerabilities
+
+FIELDS DISPLAYED
+
+Top-level vulnerability fields:
+- id
+- severity
+- status
+- firstSeenAt
+- lastSeenAt
+- count
+- cve
+- cvssScore
+- description
+- remediation
+
+Asset context:
+- asset.id
+- asset.name
+- asset.ipAddress
+- asset.macAddress
+- asset.vendor
+- asset.model
+- asset.site
+- asset.zone
+
+Report context:
+- report.id
+- report.title
+- report.publishedAt
+- report.reference
+
 =============================================================================
 -->
 
 <dashboard version="1.1" theme="light">
-  <label>Vulnerabilities</label>
+  <label>Vulnerabilities — Hardware & Firmware</label>
 
-  <!-- =============================================================== -->
-  <!-- ROW 1: VULNERABILITY DETECTIONS                                 -->
-  <!-- =============================================================== -->
   <row>
     <panel>
-      <title>Vulnerability Detections</title>
       <table>
         <search>
           <query>
@@ -31,37 +62,32 @@ using the Dragos REST API endpoint:
             | spath
             | table
                 id
-                state
                 severity
-                confidence
+                status
                 firstSeenAt
                 lastSeenAt
                 count
+                cve
+                cvssScore
+                description
+                remediation
                 asset.id
                 asset.name
-                asset.type
-                asset.vendor
-                asset.model
-                asset.firmwareVersion
                 asset.ipAddress
                 asset.macAddress
+                asset.vendor
+                asset.model
                 asset.site
                 asset.zone
                 report.id
                 report.title
-                report.cve
-                report.cwe
-                report.cvssScore
-                report.cvssVector
-                report.description
-                report.remediation
+                report.publishedAt
                 report.reference
             | sort - lastSeenAt
           </query>
         </search>
         <option name="wrap">true</option>
         <option name="rowNumbers">true</option>
-        <option name="drilldown">none</option>
       </table>
     </panel>
   </row>
