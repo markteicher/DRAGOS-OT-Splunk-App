@@ -1,0 +1,74 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_vulnerabilities_software_os.xml
+ Dragos OT Security for Splunk App
+ Software & Operating System Vulnerabilities
+=============================================================================
+
+PURPOSE
+
+Displays all vulnerability detection records related to software packages
+and operating systems retrieved from the Dragos Platform using the REST API
+endpoint:
+
+  GET /api/v2/vulnerabilities?expand=asset,softwarePackage,operatingSystem
+
+This view surfaces every vulnerability detection record ingested into Splunk
+and exposes all available fields for investigation, filtering, and analysis.
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Software & OS Vulnerabilities</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: VULNERABILITY DETECTIONS                                 -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:vulnerabilities
+            | spath
+            | table
+                id
+                severity
+                status
+                firstSeenAt
+                lastSeenAt
+                count
+
+                asset.id
+                asset.name
+                asset.ipAddress
+                asset.macAddress
+                asset.vendor
+                asset.model
+                asset.site
+                asset.zone
+
+                softwarePackage.name
+                softwarePackage.version
+                softwarePackage.vendor
+
+                operatingSystem.name
+                operatingSystem.version
+                operatingSystem.family
+
+                cve
+                cvssScore
+                description
+                remediation
+            | sort - severity
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
