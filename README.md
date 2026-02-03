@@ -284,13 +284,31 @@ All paths are relative to the root path of the SiteStore URL
 
 ## Dashboards
 
+
 | Dashboard | Description |
 |----------|-------------|
-| 🧭 Overview | High-level OT security posture |
-| 🚨 Alerts | Active detections and severity trends |
-| 🖥️ Assets | OT asset inventory and criticality |
-| 🌐 Network | Protocol and behavioral analytics |
-| 🧠 Threat Intelligence | Adversary activity and campaigns |
+| ✅ Overview | High-level OT security posture |
+| 🚨 Alerts | Active alerts and alert status |
+| 🔔 Notifications | All Dragos notifications |
+| 🔥 Notifications — By Severity | Notifications grouped by severity |
+| 📊 Notifications — Executive Deltas | Executive DoD / WoW / MoM notification deltas |
+| 🖥️ Assets | OT asset inventory |
+| 🌐 Network | Protocol and network communications |
+| 🔌 Protocols | Observed OT / ICS protocols by asset |
+| 🧬 Vulnerabilities | Hardware, firmware, software, and OS vulnerabilities |
+| 🧠 Threat Intelligence | Threat intelligence indicators and campaigns |
+| 👤 Users | Dragos platform users |
+| ⏳ User Activity & Aging | User activity, aging, and access hygiene |
+| 📈 User Activity Deltas | DoD / WoW / MoM user activity changes |
+| 🔐 Roles & Permissions | Role-to-permission reference mapping |
+| 🧭 Component ↔ API ↔ View Mapping | Appendix A — component to API mapping |
+| ❤️ System Health | Platform health and status |
+| 🏷️ Version | Dragos platform version information |
+| 📄 Reports | Generated Dragos reports |
+| ❓ Help | Usage and navigation help |
+| 📚 Documentation | Embedded Dragos documentation |
+| ⚠️ Error Logs | Dragos ingestion and API error logs |
+| ℹ️ About | Application and integration information |
 
 ---
 
