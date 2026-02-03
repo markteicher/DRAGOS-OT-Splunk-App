@@ -1,0 +1,70 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_indicators.xml
+ Dragos OT Security for Splunk App
+ Indicators
+=============================================================================
+
+PURPOSE
+
+Displays all threat indicators retrieved from the Dragos Platform.
+
+DATA SOURCE
+
+GET /api/v1/indicators
+→ sourcetype=dragos:indicators
+
+Top-level fields:
+- id
+- value
+- indicator_type
+- category
+- comment
+- first_seen
+- last_seen
+- updated_at
+- confidence
+- kill_chain
+- uuid
+- status
+- activity_groups{}
+- attack_techniques{}
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Indicators</label>
+
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | table
+                id
+                value
+                indicator_type
+                category
+                comment
+                first_seen
+                last_seen
+                updated_at
+                confidence
+                kill_chain
+                uuid
+                status
+                activity_groups{}
+                attack_techniques{}
+            | sort - updated_at
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
