@@ -1,0 +1,88 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_notifications_by_severity.xml
+ Dragos OT Security for Splunk App
+ Notifications — By Severity
+=============================================================================
+
+PURPOSE
+
+Displays all notifications retrieved from the Dragos
+Platform, including all severities.
+
+
+DATA SOURCE
+
+GET /api/v2/notifications
+→ sourcetype=dragos:notifications
+
+
+Top-level fields:
+- id
+- source
+- reviewed
+- state
+- retained
+- type
+- severity
+- summary
+- content
+- updatedAt
+- firstSeenAt
+- lastSeenAt
+- count
+
+Endpoint context:
+- endpoints{}.asset.id
+- endpoints{}.roles{}
+
+Detection context:
+- detection.id
+- detection.detectionQuads{}
+- detection.threatInfo{}
+- detection.intelReports{}
+
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Notifications — By Severity</label>
+
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:notifications
+            | spath
+            | table
+                id
+                source
+                reviewed
+                state
+                retained
+                type
+                severity
+                summary
+                content
+                updatedAt
+                firstSeenAt
+                lastSeenAt
+                count
+                endpoints{}.asset.id
+                endpoints{}.roles{}
+                detection.id
+                detection.detectionQuads{}
+                detection.threatInfo{}
+                detection.intelReports{}
+            | sort - updatedAt
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
