@@ -1,0 +1,222 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_user_activity_deltas.xml
+ Dragos OT Security for Splunk App
+ User Activity Deltas (DoD / WoW / MoM)
+=============================================================================
+
+PURPOSE
+
+Provides executive-facing change metrics (deltas) for Dragos user accounts
+and access posture over time, derived from Dragos /api/v2/users data.
+
+This view answers:
+
+- How many users exist today, and how is that changing (DoD / WoW / MoM)?
+- Are privileged roles increasing?
+- Are SSO-disabled accounts increasing?
+- Are never-logged-in accounts accumulating?
+- How is inactivity trending (30/60/90/180/365 days)?
+
+DATA SOURCE
+
+- GET /api/v2/users
+  sourcetype = dragos:users
+
+Expected fields (per user record):
+- createdAt
+- lastLoginAt
+- lastLoginIp
+- username
+- email
+- fullName
+- roles (array)
+- enabled
+- ssoEnabled
+
+NOTES
+
+- Time math is performed entirely in SPL
+- Deltas compare current window vs prior window:
+    DoD: last 24h vs previous 24h
+    WoW: last 7d vs previous 7d
+    MoM: last 30d vs previous 30d
+- spath is used explicitly for JSON field extraction
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Users — Activity Deltas</label>
+
+  <description>
+    Executive change metrics for Dragos user posture derived from dragos:users
+    (DoD / WoW / MoM).
+  </description>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: TOTAL USERS DELTA                                       -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>👤 Total Users (DoD / WoW / MoM)</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:users
+            | spath
+            | eval created_epoch=strptime(createdAt,"%Y-%m-%dT%H:%M:%SZ")
+            | eval now_epoch=now()
+
+            | eval in_dod = if(created_epoch &gt;= now_epoch-86400,1,0)
+            | eval in_prev_dod = if(created_epoch &gt;= now_epoch-172800 AND created_epoch &lt; now_epoch-86400,1,0)
+
+            | eval in_wow = if(created_epoch &gt;= now_epoch-604800,1,0)
+            | eval in_prev_wow = if(created_epoch &gt;= now_epoch-1209600 AND created_epoch &lt; now_epoch-604800,1,0)
+
+            | eval in_mom = if(created_epoch &gt;= now_epoch-2592000,1,0)
+            | eval in_prev_mom = if(created_epoch &gt;= now_epoch-5184000 AND created_epoch &lt; now_epoch-2592000,1,0)
+
+            | stats
+                count as total_users
+                sum(in_dod) as new_dod
+                sum(in_prev_dod) as prev_dod
+                sum(in_wow) as new_wow
+                sum(in_prev_wow) as prev_wow
+                sum(in_mom) as new_mom
+                sum(in_prev_mom) as prev_mom
+
+            | eval DoD=new_dod-prev_dod
+            | eval WoW=new_wow-prev_wow
+            | eval MoM=new_mom-prev_mom
+
+            | table total_users DoD WoW MoM
+            | rename total_users as "Current Total"
+          </query>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: PRIVILEGED ROLES DELTA                                  -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>🔐 Privileged Users (DoD / WoW / MoM)</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:users
+            | spath
+            | eval roles_str=tostring(roles)
+            | eval is_privileged=if(match(roles_str,"admin|system|super"),1,0)
+
+            | eval created_epoch=strptime(createdAt,"%Y-%m-%dT%H:%M:%SZ")
+            | eval now_epoch=now()
+
+            | eval in_dod = if(created_epoch &gt;= now_epoch-86400,1,0)
+            | eval in_prev_dod = if(created_epoch &gt;= now_epoch-172800 AND created_epoch &lt; now_epoch-86400,1,0)
+
+            | stats
+                sum(is_privileged) as current_privileged
+                sum(eval(is_privileged*in_dod)) as new_privileged
+                sum(eval(is_privileged*in_prev_dod)) as prev_privileged
+
+            | eval DoD=new_privileged-prev_privileged
+            | table current_privileged DoD
+            | rename current_privileged as "Current Privileged Users"
+          </query>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: SSO DISABLED DELTA                                      -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>🔓 SSO Disabled Users (DoD / WoW / MoM)</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:users
+            | spath
+            | eval sso_disabled=if(ssoEnabled=false,1,0)
+
+            | eval created_epoch=strptime(createdAt,"%Y-%m-%dT%H:%M:%SZ")
+            | eval now_epoch=now()
+
+            | eval in_dod = if(created_epoch &gt;= now_epoch-86400,1,0)
+            | eval in_prev_dod = if(created_epoch &gt;= now_epoch-172800 AND created_epoch &lt; now_epoch-86400,1,0)
+
+            | stats
+                sum(sso_disabled) as current_disabled
+                sum(eval(sso_disabled*in_dod)) as new_disabled
+                sum(eval(sso_disabled*in_prev_dod)) as prev_disabled
+
+            | eval DoD=new_disabled-prev_disabled
+            | table current_disabled DoD
+            | rename current_disabled as "Current SSO Disabled"
+          </query>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 4: NEVER LOGGED IN                                         -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>🕳️ Never Logged In</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:users
+            | spath
+            | eval never_logged_in=if(isnull(lastLoginAt),1,0)
+            | stats sum(never_logged_in) as never_logged_in
+            | table never_logged_in
+            | rename never_logged_in as "Users Never Logged In"
+          </query>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 5: INACTIVITY BUCKETS                                      -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>⏳ Inactivity Buckets</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:users
+            | spath
+            | eval last_login_epoch=strptime(lastLoginAt,"%Y-%m-%dT%H:%M:%SZ")
+            | eval now_epoch=now()
+            | eval days_since=round((now_epoch-last_login_epoch)/86400,0)
+
+            | eval bucket=case(
+                isnull(lastLoginAt),"Never Logged In",
+                days_since&lt;=30,"0–30 days",
+                days_since&lt;=60,"31–60 days",
+                days_since&lt;=90,"61–90 days",
+                days_since&lt;=180,"91–180 days",
+                days_since&lt;=365,"181–365 days",
+                1=1,"365+ days"
+              )
+
+            | stats count by bucket
+            | sort bucket
+          </query>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
