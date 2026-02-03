@@ -2,14 +2,40 @@
 =============================================================================
  default/data/ui/views/dragos_protocols.xml
  Dragos OT Security for Splunk App
- Protocols (Derived from Assets)
+ Network Protocols
 =============================================================================
 
 PURPOSE
 
-Visualizes protocol usage derived from Dragos asset records returned by:
+Displays network protocol activity observed by the Dragos Platform.
+
+This view is derived directly from asset telemetry returned by:
 
   GET /api/v2/assets
+
+Protocol data is embedded within each asset record and is extracted
+from the following JSON fields exactly as provided by the Dragos API:
+
+ASSET FIELDS (context only)
+- id
+- name
+- ipAddress
+- macAddress
+- vendor
+- model
+- site
+- zone
+
+PROTOCOL FIELDS (used in this view)
+- protocols.name
+- protocols.category
+- protocols.direction
+- protocols.role
+- protocols.firstSeenAt
+- protocols.lastSeenAt
+
+This view visualizes protocol usage only.
+No asset tables are rendered here.
 
 =============================================================================
 -->
@@ -18,31 +44,48 @@ Visualizes protocol usage derived from Dragos asset records returned by:
   <label>Protocols</label>
 
   <!-- =============================================================== -->
-  <!-- ROW 1: PROTOCOL DISTRIBUTION                                    -->
+  <!-- ROW 1: PROTOCOL DISTRIBUTION                                   -->
   <!-- =============================================================== -->
   <row>
     <panel>
-      <title>Protocol Distribution</title>
+      <title>Protocols by Name</title>
       <chart>
         <search>
           <query>
             index=* sourcetype=dragos:assets
-            | spath path=protocols{}
+            | spath
             | mvexpand protocols
             | spath input=protocols
             | stats count by protocols.name
             | sort - count
-            | head 10
           </query>
         </search>
         <option name="charting.chart">bar</option>
         <option name="charting.legend.placement">none</option>
       </chart>
     </panel>
+
+    <panel>
+      <title>Protocols by Category</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:assets
+            | spath
+            | mvexpand protocols
+            | spath input=protocols
+            | stats count by protocols.category
+            | sort - count
+          </query>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
   </row>
 
   <!-- =============================================================== -->
-  <!-- ROW 2: PROTOCOL DIRECTION                                       -->
+  <!-- ROW 2: PROTOCOL DIRECTION AND ROLE                              -->
   <!-- =============================================================== -->
   <row>
     <panel>
@@ -51,7 +94,7 @@ Visualizes protocol usage derived from Dragos asset records returned by:
         <search>
           <query>
             index=* sourcetype=dragos:assets
-            | spath path=protocols{}
+            | spath
             | mvexpand protocols
             | spath input=protocols
             | stats count by protocols.direction
@@ -61,19 +104,14 @@ Visualizes protocol usage derived from Dragos asset records returned by:
         <option name="charting.legend.placement">none</option>
       </chart>
     </panel>
-  </row>
 
-  <!-- =============================================================== -->
-  <!-- ROW 3: PROTOCOL ROLE                                            -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>Protocol Role</title>
       <chart>
         <search>
           <query>
             index=* sourcetype=dragos:assets
-            | spath path=protocols{}
+            | spath
             | mvexpand protocols
             | spath input=protocols
             | stats count by protocols.role
@@ -86,23 +124,23 @@ Visualizes protocol usage derived from Dragos asset records returned by:
   </row>
 
   <!-- =============================================================== -->
-  <!-- ROW 4: PROTOCOL CATEGORY                                        -->
+  <!-- ROW 3: PROTOCOL VISIBILITY OVER TIME                            -->
   <!-- =============================================================== -->
   <row>
     <panel>
-      <title>Protocol Category</title>
+      <title>Protocol First Seen Over Time</title>
       <chart>
         <search>
           <query>
             index=* sourcetype=dragos:assets
-            | spath path=protocols{}
+            | spath
             | mvexpand protocols
             | spath input=protocols
-            | stats count by protocols.category
-            | sort - count
+            | timechart span=1d count by protocols.name
           </query>
         </search>
-        <option name="charting.chart">pie</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.legend.placement">bottom</option>
       </chart>
     </panel>
   </row>
