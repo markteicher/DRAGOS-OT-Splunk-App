@@ -1,0 +1,113 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_component_api_view.xml
+ Dragos OT Security for Splunk App
+ Component ↔ API ↔ View ↔ Sourcetype Mapping (Appendix A)
+=============================================================================
+
+PURPOSE
+
+Provides an authoritative, static reference mapping Dragos platform
+components to their corresponding REST API endpoints, Splunk views,
+and sourcetypes.
+
+This view directly represents Appendix A – Component API Mapping
+from the Dragos Platform Developer Guide.
+
+This dashboard is informational only:
+- No SPL
+- No aggregation
+- No inference
+- No enrichment
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Component ↔ API ↔ View Mapping</label>
+
+  <row>
+    <panel>
+      <title>Dragos Component to API and Splunk Mapping</title>
+      <html>
+        <![CDATA[
+        <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+          <tr>
+            <th>Component</th>
+            <th>API Endpoint</th>
+            <th>HTTP Method</th>
+            <th>Splunk View</th>
+            <th>Sourcetype</th>
+          </tr>
+
+          <tr>
+            <td>Users</td>
+            <td>/api/v2/users</td>
+            <td>GET</td>
+            <td>dragos_users.xml</td>
+            <td>dragos:users</td>
+          </tr>
+
+          <tr>
+            <td>Assets</td>
+            <td>/api/v2/assets</td>
+            <td>GET</td>
+            <td>dragos_assets_inventory.xml</td>
+            <td>dragos:assets</td>
+          </tr>
+
+          <tr>
+            <td>Notifications / Detections</td>
+            <td>/api/v2/notifications</td>
+            <td>GET</td>
+            <td>dragos_notifications.xml</td>
+            <td>dragos:notifications</td>
+          </tr>
+
+          <tr>
+            <td>Vulnerabilities (Hardware & Firmware)</td>
+            <td>/api/v1/vulnerabilities?expand=asset,report</td>
+            <td>GET</td>
+            <td>dragos_vulnerabilities.xml</td>
+            <td>dragos:vulnerabilities</td>
+          </tr>
+
+          <tr>
+            <td>Vulnerabilities (Software & OS)</td>
+            <td>/api/v2/vulnerabilities?expand=asset,softwarePackage,operatingSystem</td>
+            <td>GET</td>
+            <td>dragos_software_os_vulnerabilities.xml</td>
+            <td>dragos:vulnerabilities</td>
+          </tr>
+
+          <tr>
+            <td>Protocols (Asset Communications)</td>
+            <td>/api/v2/assets</td>
+            <td>GET</td>
+            <td>dragos_protocols.xml</td>
+            <td>dragos:assets</td>
+          </tr>
+
+          <tr>
+            <td>Threat Intelligence</td>
+            <td>/api/v1/threat-intel</td>
+            <td>GET</td>
+            <td>dragos_threat_intel.xml</td>
+            <td>dragos:threat_intel</td>
+          </tr>
+
+          <tr>
+            <td>Audit Logs</td>
+            <td>/api/v1/audit</td>
+            <td>GET</td>
+            <td>dragos_audit_logs.xml</td>
+            <td>dragos:audit</td>
+          </tr>
+
+        </table>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+</dashboard>
