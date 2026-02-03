@@ -1,0 +1,62 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_version.xml
+ Dragos OT Security for Splunk App
+ Platform Version
+=============================================================================
+
+PURPOSE
+
+Displays Dragos Platform version information retrieved from the Dragos
+REST API endpoint:
+
+  GET /api/v1/version
+
+
+DATA SOURCE
+
+GET /api/v1/version
+→ sourcetype=dragos:version
+
+
+Expected fields (as ingested from the endpoint):
+- version
+- build
+- buildDate
+- apiVersion
+- product
+- site
+- hostname
+
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Platform Version</label>
+
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:version
+            | spath
+            | stats latest(*) as *
+            | table
+                version
+                build
+                buildDate
+                apiVersion
+                product
+                site
+                hostname
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
