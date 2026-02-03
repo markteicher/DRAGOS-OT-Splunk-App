@@ -1,0 +1,83 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_alerts.xml
+ Dragos OT Security for Splunk App
+ Alerts
+=============================================================================
+
+PURPOSE
+
+Displays all alerts retrieved from the Dragos Platform.
+
+DATA SOURCE
+
+GET /api/v1/alerts
+→ sourcetype=dragos:alerts
+
+FIELDS
+
+- id
+- severity
+- confidence
+- threatFamily
+- threatActor
+- protocol
+- status
+- summary
+- description
+- firstSeenAt
+- lastSeenAt
+- updatedAt
+- assets{}.id
+- assets{}.name
+- assets{}.ipAddress
+- assets{}.macAddress
+- assets{}.vendor
+- assets{}.model
+- assets{}.site
+- assets{}.zone
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Alerts</label>
+
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:alerts
+            | spath
+            | table
+                id
+                severity
+                confidence
+                threatFamily
+                threatActor
+                protocol
+                status
+                summary
+                description
+                firstSeenAt
+                lastSeenAt
+                updatedAt
+                assets{}.id
+                assets{}.name
+                assets{}.ipAddress
+                assets{}.macAddress
+                assets{}.vendor
+                assets{}.model
+                assets{}.site
+                assets{}.zone
+            | sort - updatedAt
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
