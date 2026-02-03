@@ -64,47 +64,41 @@ Dragos supports visibility across a wide range of OT environments, including:
 
 ## Industrial Protocol Coverage
 
-Dragos provides native awareness of industrial protocols, including but not limited to:
+### Vendor Specific OT/ICS Protocols
 
-- Modbus
-  
-- DNP3
-  
-- BACnet
-  
-- IEC 60870
-  
-- IEC 61850
-  
-- EtherNet/IP
-  
-- PROFINET
-  
-- CIP
-  
-- S7Comm
-  
-- ICCP / TASE.2
-  
-- SEL
-  
-## Proprietary protocols
-
-Vendor Specific:
-
-- Siemens
-  
-- S7Comm
-  
-- Rockwell
-  
-- Schneider Electric
-  
-- ABB
-  
-- Honeywell
-  
-- Yogogawa
+| Group | Family | Protocol Name |
+|------|--------|---------------|
+| ABB | 800xA | CNCP |
+| ABB | 800xA | CSLib |
+| ABB | 800xA | MMS |
+| ABB | 800xA | NIS |
+| ABB | 800xA | RNRP |
+| ABB | Other | Freelance |
+| Cooper Power Systems |  | SES-92 |
+| Digi International |  | ADDP |
+| Eaton | MTL | MTL8000 Matrix |
+| Emerson | DeltaV | DOP |
+| Emerson | DeltaV | RTP |
+| Emerson | DeltaV | SIS |
+| Emerson | Fisher ROC | ROC Plus |
+| Emerson | Ovation | Data Highway |
+| Emerson | Ovation | DB XMIT |
+| Emerson | Ovation | Mgmt |
+| Emerson | Ovation | REM |
+| Emerson | Ovation | SSQuery |
+| Emerson | Ovation | SSRPC |
+| Emerson | Ovation | System Reservation |
+| Emerson | Ovation | Toolserver |
+| Emerson | Ovation | UDP 5230 |
+| GE | FANUC | EGD |
+| GE | FANUC | SRTP |
+| GE | InterSite | ISD |
+| GE | Proficy | iFix 2010 |
+| GE | Proficy | iFix Historian |
+| GE | SDI | Classic SDI |
+| GE | SDI | SDI |
+| Honeywell | Experion | SDP |
+| Honeywell | Mercor (Mercury) | Mercor |
 
 ---
 
