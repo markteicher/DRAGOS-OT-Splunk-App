@@ -1,0 +1,77 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_system_health.xml
+ Dragos OT Security for Splunk App
+ System Health
+=============================================================================
+
+PURPOSE
+
+Displays Dragos Platform system health information retrieved from:
+
+  GET /api/v1/status
+
+=============================================================================
+
+DATA SOURCE
+
+GET /api/v1/status
+→ sourcetype=dragos:status
+
+Fields:
+- status
+- uptime
+- timestamp
+- services{}.name
+- services{}.status
+- services{}.message
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>System Health</label>
+
+  <row>
+    <panel>
+      <title>Platform Status</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:status
+            | spath
+            | table
+                status
+                uptime
+                timestamp
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+      </table>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Service Status</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:status
+            | spath
+            | mvexpand services
+            | spath input=services
+            | table
+                services.name
+                services.status
+                services.message
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
