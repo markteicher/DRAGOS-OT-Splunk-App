@@ -1,0 +1,98 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_threat_intel.xml
+ Dragos OT Security for Splunk App
+ Threat Intelligence
+=============================================================================
+
+PURPOSE
+
+Displays all threat intelligence records retrieved from the Dragos Platform.
+
+This view provides direct visibility into Dragos threat intelligence objects
+for analyst review, correlation, and validation inside Splunk.
+
+This view retrieves and displays **all threat intelligence records** exactly
+as returned by the Dragos REST API.
+
+DATA SOURCE
+
+GET /api/v1/threats
+→ sourcetype=dragos:threat_intel
+
+EXPECTED FIELDS (as provided by Dragos API)
+
+Top-level fields:
+- id
+- name
+- description
+- category
+- severity
+- confidence
+- active
+- createdAt
+- updatedAt
+
+Threat context:
+- threatType
+- malwareFamily
+- campaign
+- actor
+- aliases{}
+
+ICS / ATT&CK context:
+- frameworks{}
+- tactics{}
+- techniques{}
+- procedures{}
+
+Operational context:
+- indicators{}
+- references{}
+- tags{}
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Threat Intelligence</label>
+
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:threat_intel
+            | spath
+            | table
+                id
+                name
+                description
+                category
+                severity
+                confidence
+                active
+                threatType
+                malwareFamily
+                campaign
+                actor
+                aliases{}
+                frameworks{}
+                tactics{}
+                techniques{}
+                procedures{}
+                indicators{}
+                references{}
+                tags{}
+                createdAt
+                updatedAt
+            | sort - updatedAt
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
