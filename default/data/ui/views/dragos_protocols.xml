@@ -13,29 +13,15 @@ This view is derived directly from asset telemetry returned by:
 
   GET /api/v2/assets
 
-Protocol data is embedded within each asset record and is extracted
-from the following JSON fields exactly as provided by the Dragos API:
+Protocol data is extracted from the following JSON fields exactly
+as provided by the Dragos API:
 
-ASSET FIELDS (context only)
-- id
-- name
-- ipAddress
-- macAddress
-- vendor
-- model
-- site
-- zone
-
-PROTOCOL FIELDS (used in this view)
 - protocols.name
 - protocols.category
 - protocols.direction
 - protocols.role
 - protocols.firstSeenAt
 - protocols.lastSeenAt
-
-This view visualizes protocol usage only.
-No asset tables are rendered here.
 
 =============================================================================
 -->
@@ -124,7 +110,7 @@ No asset tables are rendered here.
   </row>
 
   <!-- =============================================================== -->
-  <!-- ROW 3: PROTOCOL VISIBILITY OVER TIME                            -->
+  <!-- ROW 3: PROTOCOL FIRST SEEN                                     -->
   <!-- =============================================================== -->
   <row>
     <panel>
