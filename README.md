@@ -14,7 +14,7 @@ Data is ingested into a user-specified Splunk index and assigned explicit source
 
 This includes OT alerts and detections, asset inventory, network protocol activity, threat intelligence, and adversary context.
 
-The Splunk App is intended to surface Dragos OT data directly inside Splunk so that **SOC teams, OT security engineers, asset owners, and leadership** can monitor and analyze OT risk without requiring direct access to the Dragos user interface.
+The Splunk App is intended to surface Dragos OT data directly inside Splunk so that **Executives**, **Stakeholders**,  and **asset owners** can easily view At a Glance or drilldwown or export data from the OT/IIOT landscape without requiring direct access to the Dragos user interface.
 
 ---
 
