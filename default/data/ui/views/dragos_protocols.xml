@@ -1,0 +1,110 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_protocols.xml
+ Dragos OT Security for Splunk App
+ Protocols (Derived from Assets)
+=============================================================================
+
+PURPOSE
+
+Visualizes protocol usage derived from Dragos asset records returned by:
+
+  GET /api/v2/assets
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Protocols</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: PROTOCOL DISTRIBUTION                                    -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Protocol Distribution</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:assets
+            | spath path=protocols{}
+            | mvexpand protocols
+            | spath input=protocols
+            | stats count by protocols.name
+            | sort - count
+            | head 10
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: PROTOCOL DIRECTION                                       -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Protocol Direction</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:assets
+            | spath path=protocols{}
+            | mvexpand protocols
+            | spath input=protocols
+            | stats count by protocols.direction
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: PROTOCOL ROLE                                            -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Protocol Role</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:assets
+            | spath path=protocols{}
+            | mvexpand protocols
+            | spath input=protocols
+            | stats count by protocols.role
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 4: PROTOCOL CATEGORY                                        -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Protocol Category</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:assets
+            | spath path=protocols{}
+            | mvexpand protocols
+            | spath input=protocols
+            | stats count by protocols.category
+            | sort - count
+          </query>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+  </row>
+
+</dashboard>
