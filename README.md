@@ -50,10 +50,15 @@ Dragos supports visibility across a wide range of OT environments, including:
 - Energy and Utilities
 - Oil and Gas
 - Chemicals
+- Electric Grid
 - Transportation
 - Water and Wastewater
 - Critical Infrastructure
 - Industrial Facilities
+- Public Sector
+- Food and Beverage
+- Pharmaceuticals
+- Building Automation Systems
 
 ---
 
@@ -62,16 +67,44 @@ Dragos supports visibility across a wide range of OT environments, including:
 Dragos provides native awareness of industrial protocols, including but not limited to:
 
 - Modbus
+  
 - DNP3
-- EtherNet/IP
-- PROFINET
-- IEC 61850
-- OPC
+  
 - BACnet
+  
+- IEC 60870
+  
+- IEC 61850
+  
+- EtherNet/IP
+  
+- PROFINET
+  
+- CIP
+  
+- S7Comm
+  
 - ICCP / TASE.2
-- Custom and proprietary ICS protocols
+  
+- SEL
+  
+## Proprietary protocols
 
-Protocol-level telemetry and detections are ingested into Splunk via this app.
+Vendor Specific:
+
+- Siemens
+  
+- S7Comm
+  
+- Rockwell
+  
+- Schneider Electric
+  
+- ABB
+  
+- Honeywell
+  
+- Yogogawa
 
 ---
 
