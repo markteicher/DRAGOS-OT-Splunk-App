@@ -1,0 +1,181 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_threat_intel_overview.xml
+ Dragos OT Security for Splunk App
+ Threat Intelligence — Executive Overview
+=============================================================================
+
+PURPOSE
+
+Provides an executive-level overview of Dragos threat intelligence
+ingested into Splunk. This view summarizes indicators, activity groups,
+confidence levels, and temporal trends using raw Dragos threat intel data.
+
+DATA SOURCE
+
+GET /api/v1/threats
+→ sourcetype=dragos:threat_intel
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Threat Intelligence — Overview</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: EXECUTIVE ROLLUPS                                        -->
+  <!-- =============================================================== -->
+  <row>
+
+    <panel>
+      <title>🧠 Total Threat Intel Records</title>
+      <single>
+        <search>
+          <query>
+            index=* sourcetype=dragos:threat_intel
+            | stats count
+          </query>
+        </search>
+        <option name="colorMode">block</option>
+      </single>
+    </panel>
+
+    <panel>
+      <title>⚠️ High Confidence</title>
+      <single>
+        <search>
+          <query>
+            index=* sourcetype=dragos:threat_intel
+            | where confidence="high"
+            | stats count
+          </query>
+        </search>
+        <option name="colorMode">block</option>
+      </single>
+    </panel>
+
+    <panel>
+      <title>🟡 Moderate Confidence</title>
+      <single>
+        <search>
+          <query>
+            index=* sourcetype=dragos:threat_intel
+            | where confidence="moderate"
+            | stats count
+          </query>
+        </search>
+        <option name="colorMode">block</option>
+      </single>
+    </panel>
+
+    <panel>
+      <title>🧊 Low Confidence</title>
+      <single>
+        <search>
+          <query>
+            index=* sourcetype=dragos:threat_intel
+            | where confidence="low"
+            | stats count
+          </query>
+        </search>
+        <option name="colorMode">block</option>
+      </single>
+    </panel>
+
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: THREAT BREAKDOWNS                                        -->
+  <!-- =============================================================== -->
+  <row>
+
+    <panel>
+      <title>Threats by Activity Group</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:threat_intel
+            | spath activity_groups{}
+            | mvexpand activity_groups{}
+            | stats count by activity_groups{}
+            | sort - count
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+
+    <panel>
+      <title>Threats by Indicator Type</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:threat_intel
+            | stats count by indicator_type
+            | sort - count
+          </query>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: TEMPORAL INTELLIGENCE                                    -->
+  <!-- =============================================================== -->
+  <row>
+
+    <panel>
+      <title>Threat Intel Over Time</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:threat_intel
+            | timechart span=1d count
+          </query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 4: DETAILED REVIEW TABLE                                    -->
+  <!-- =============================================================== -->
+  <row>
+
+    <panel>
+      <title>Threat Intelligence Records</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:threat_intel
+            | spath
+            | table
+                id
+                indicator_type
+                value
+                category
+                confidence
+                kill_chain
+                status
+                first_seen
+                last_seen
+                updated_at
+                activity_groups{}
+                attack_techniques{}
+            | sort - updated_at
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+
+  </row>
+
+</dashboard>
