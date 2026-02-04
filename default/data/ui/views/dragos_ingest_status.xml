@@ -2,21 +2,38 @@
 =============================================================================
  default/data/ui/views/dragos_ingest_status.xml
  Dragos OT Security for Splunk App
+ Ingest Status & Health
+=============================================================================
 
- Ingest Status Dashboard
+PURPOSE
+
+Provides a comprehensive, SLA-aware view of Dragos data ingestion health
+across all collectors and sensors.
+
+
+FEATURES
+
+• Per-collector SLA thresholds (minutes)
+• Sensor-level ingest health (host + sourcetype)
+• OT vs IT ingest separation
+• Executive rollups with red / yellow / green indicators
+
+All logic is search-time only and transparent in SPL.
+
+DATA ASSUMPTIONS
+
+- index = dragos
+- sourcetypes follow dragos:* naming
+- _time reflects ingest time of each collector
+
 =============================================================================
 -->
 
 <dashboard version="1.1" theme="light">
   <label>Ingest Status</label>
 
-  <description>
-    Visibility into Dragos data ingestion health, freshness, and volume.
-    All status logic is evaluated at search time using SPL.
-  </description>
-
   <!-- =============================================================== -->
-  <!-- FILTERS                                                         -->
+  <!-- GLOBAL FILTERS                                                  -->
   <!-- =============================================================== -->
   <row>
     <panel>
@@ -28,95 +45,197 @@
         </default>
       </input>
 
-      <input type="dropdown" token="sourcetype">
-        <label>Sourcetype</label>
+      <input type="dropdown" token="site">
+        <label>Sensor / Host</label>
         <choice value="*">All</choice>
-        <choice value="dragos:assets">Assets</choice>
-        <choice value="dragos:vulnerabilities">Vulnerabilities</choice>
-        <choice value="dragos:notifications">Notifications</choice>
-        <choice value="dragos:indicators">Indicators</choice>
         <default>*</default>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:*
+            | stats count by host
+            | sort host
+            | rename host as label, host as value
+          </query>
+        </search>
       </input>
     </panel>
   </row>
 
   <!-- =============================================================== -->
-  <!-- INGEST HEALTH SUMMARY                                           -->
+  <!-- COLLECTOR SLA DEFINITIONS                                       -->
   <!-- =============================================================== -->
   <row>
     <panel>
-      <title>Ingest Health Overview</title>
+      <title>Collector SLA Thresholds (Minutes)</title>
       <table>
         <search>
           <query>
-            index=dragos sourcetype=$sourcetype$
-            | stats
-                latest(_time) as last_event_time
-                count as event_count
-              by sourcetype
-            | eval age_minutes = round((now() - last_event_time) / 60, 1)
-            | eval ingest_status = case(
-                age_minutes <= 15, "Healthy",
-                age_minutes <= 60, "Delayed",
-                age_minutes > 60, "Stale"
-              )
-            | eval status_icon = case(
-                ingest_status="Healthy","🟢",
-                ingest_status="Delayed","🟡",
-                ingest_status="Stale","🔴"
-              )
-            | eval last_event_time = strftime(last_event_time, "%Y-%m-%d %H:%M:%S")
-            | table status_icon ingest_status sourcetype event_count last_event_time age_minutes
+            | makeresults
+            | eval definitions="dragos:assets=60,dragos:vulnerabilities=720,dragos:notifications=15,dragos:indicators=1440"
+            | makemv delim="," definitions
+            | mvexpand definitions
+            | rex field=definitions "(?&lt;sourcetype&gt;[^=]+)=(?&lt;sla_minutes&gt;\d+)"
+            | eval sla_minutes=tonumber(sla_minutes)
+            | table sourcetype sla_minutes
             | sort sourcetype
           </query>
-          <earliest>$time_range.earliest$</earliest>
-          <latest>$time_range.latest$</latest>
         </search>
-
         <option name="wrap">true</option>
-        <option name="count">20</option>
       </table>
     </panel>
   </row>
 
   <!-- =============================================================== -->
-  <!-- EVENT VOLUME TREND                                              -->
+  <!-- EXECUTIVE ROLLUP                                                -->
   <!-- =============================================================== -->
   <row>
     <panel>
-      <title>Ingest Volume Over Time</title>
-      <chart>
+      <title>Executive Ingest Health Rollup</title>
+      <table>
         <search>
           <query>
-            index=dragos sourcetype=$sourcetype$
-            | timechart span=1h count
+            | makeresults
+            | eval definitions="dragos:assets=60,dragos:vulnerabilities=720,dragos:notifications=15,dragos:indicators=1440"
+            | makemv delim="," definitions
+            | mvexpand definitions
+            | rex field=definitions "(?&lt;sourcetype&gt;[^=]+)=(?&lt;sla_minutes&gt;\d+)"
+            | eval sla_minutes=tonumber(sla_minutes)
+
+            | join type=left sourcetype [
+                search index=dragos sourcetype=dragos:* host=$site$
+                | stats latest(_time) as last_event_time by sourcetype
+              ]
+
+            | eval age_minutes=if(isnull(last_event_time),999999,round((now()-last_event_time)/60,1))
+            | eval state=case(
+                age_minutes &lt;= sla_minutes,"Healthy",
+                age_minutes &lt;= sla_minutes*2,"Delayed",
+                1=1,"Stale"
+              )
+
+            | stats
+                sum(eval(state="Healthy")) as healthy
+                sum(eval(state="Delayed")) as delayed
+                sum(eval(state="Stale")) as stale
+
+            | eval overall=case(
+                stale&gt;0,"🔴 RED",
+                delayed&gt;0,"🟡 YELLOW",
+                1=1,"🟢 GREEN"
+              )
+
+            | table overall healthy delayed stale
           </query>
           <earliest>$time_range.earliest$</earliest>
           <latest>$time_range.latest$</latest>
         </search>
-        <option name="charting.chart">line</option>
-      </chart>
+      </table>
     </panel>
   </row>
 
   <!-- =============================================================== -->
-  <!-- LAST SEEN BY SOURCETYPE                                         -->
+  <!-- PER-COLLECTOR HEALTH                                            -->
   <!-- =============================================================== -->
   <row>
     <panel>
-      <title>Last Seen Event by Sourcetype</title>
+      <title>Collector Health (SLA Evaluated)</title>
       <table>
         <search>
           <query>
-            index=dragos sourcetype=$sourcetype$
-            | stats latest(_time) as last_seen by sourcetype
-            | eval last_seen = strftime(last_seen, "%Y-%m-%d %H:%M:%S")
+            | makeresults
+            | eval definitions="dragos:assets=60,dragos:vulnerabilities=720,dragos:notifications=15,dragos:indicators=1440"
+            | makemv delim="," definitions
+            | mvexpand definitions
+            | rex field=definitions "(?&lt;sourcetype&gt;[^=]+)=(?&lt;sla_minutes&gt;\d+)"
+            | eval sla_minutes=tonumber(sla_minutes)
+
+            | join type=left sourcetype [
+                search index=dragos sourcetype=dragos:* host=$site$
+                | stats latest(_time) as last_event_time count as event_count by sourcetype
+              ]
+
+            | eval age_minutes=if(isnull(last_event_time),999999,round((now()-last_event_time)/60,1))
+            | eval state=case(
+                age_minutes &lt;= sla_minutes,"Healthy",
+                age_minutes &lt;= sla_minutes*2,"Delayed",
+                1=1,"Stale"
+              )
+            | eval icon=case(
+                state="Healthy","🟢",
+                state="Delayed","🟡",
+                1=1,"🔴"
+              )
+            | eval last_event_time=strftime(last_event_time,"%Y-%m-%d %H:%M:%S")
+
+            | table icon state sourcetype sla_minutes event_count last_event_time age_minutes
             | sort sourcetype
           </query>
           <earliest>$time_range.earliest$</earliest>
           <latest>$time_range.latest$</latest>
         </search>
-        <option name="count">20</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- SENSOR-LEVEL HEALTH                                             -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Sensor-Level Ingest Health</title>
+      <table>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:* host=$site$
+            | stats latest(_time) as last_event_time count as event_count by host sourcetype
+            | eval age_minutes=round((now()-last_event_time)/60,1)
+            | eval state=case(
+                age_minutes&lt;=15,"Healthy",
+                age_minutes&lt;=60,"Delayed",
+                1=1,"Stale"
+              )
+            | eval icon=case(
+                state="Healthy","🟢",
+                state="Delayed","🟡",
+                1=1,"🔴"
+              )
+            | eval last_event_time=strftime(last_event_time,"%Y-%m-%d %H:%M:%S")
+            | table icon state host sourcetype event_count last_event_time age_minutes
+            | sort host sourcetype
+          </query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+        </search>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- OT VS IT INGEST SEPARATION                                      -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>OT vs IT Ingest Separation</title>
+      <table>
+        <search>
+          <query>
+            index=dragos host=$site$
+            | eval dataset=case(
+                sourcetype IN ("dragos:assets","dragos:vulnerabilities"),"OT / Inventory",
+                sourcetype="dragos:notifications","TDIR",
+                sourcetype="dragos:indicators","Threat Intel",
+                1=1,"Other"
+              )
+            | stats latest(_time) as last_event_time count as event_count by dataset sourcetype
+            | eval last_event_time=strftime(last_event_time,"%Y-%m-%d %H:%M:%S")
+            | table dataset sourcetype event_count last_event_time
+            | sort dataset sourcetype
+          </query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+        </search>
       </table>
     </panel>
   </row>
