@@ -2,14 +2,12 @@
 =============================================================================
  default/data/ui/nav/default.xml
  Dragos OT Security for Splunk App
- 
 =============================================================================
 
 PURPOSE
 
 Defines the primary navigation structure for the Dragos OT Security
 for Splunk App.
-
 
 This file defines navigation only.
 =============================================================================
@@ -51,7 +49,14 @@ This file defines navigation only.
   <collection label="Admin">
     <view name="dragos_admin"/>
     <view name="dragos_users"/>
-    <view name="dragos_roles"/>
+    <view name="dragos_user_management"/>
+    <view name="dragos_user_roles"/>
+    <view name="dragos_user_permissions"/>
+    <view name="dragos_scopes"/>
+    <view name="dragos_integrations"/>
+    <view name="dragos_sensor_management"/>
+    <view name="dragos_sitestore_management"/>
+    <view name="dragos_baseline_logs"/>
   </collection>
 
   <!-- Baselines -->
