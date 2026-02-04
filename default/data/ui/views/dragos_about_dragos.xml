@@ -1,0 +1,47 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_about_dragos.xml
+ Dragos OT Security for Splunk App
+ About Dragos
+=============================================================================
+
+PURPOSE
+
+Provides a visual and informational reference for the Dragos platform
+within the Splunk App. This view renders the Dragos logo using a
+white-outline ASCII representation.
+
+
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>About — Dragos</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: DRAGOS BRANDING                                          -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Dragos</title>
+      <html>
+        <![CDATA[
+        <div style="display:inline-block; padding:22px 26px; background:#2c3e50; border-radius:6px;">
+          <pre style="margin:0; color:#ffffff; font-family:'Courier New', monospace;
+                       font-size:18px; line-height:18px; letter-spacing:1px;
+                       white-space:pre;">
+  ____                              
+ |  _ \ _ __ __ _  __ _  ___  ___   
+ | | | | '__/ _` |/ _` |/ _ \/ __|  
+ | |_| | | | (_| | (_| | (_) \__ \  
+ |____/|_|  \__,_|\__, |\___/|___/  
+                   |___/           
+          </pre>
+        </div>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+</dashboard>
