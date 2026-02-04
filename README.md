@@ -1,13 +1,13 @@
 # Dragos OT Security for Splunk App
 
-
+```
   ____                              
  |  _ \ _ __ __ _  __ _  ___  ___   
  | | | | '__/ _` |/ _` |/ _ \/ __|  
  | |_| | | | (_| | (_| | (_) \__ \  
  |____/|_|  \__,_|\__, |\___/|___/  
                    |___|           
-
+```
 
               
 ---
@@ -245,7 +245,7 @@ All mappings are derived from the Dragos Platform Developer Guide.
 
 ---
 
-## Appendix A — Component API Documentation Pages
+## Component API Documentation Pages
 
 All paths are relative to the root path of the SiteStore URL  
 (for example: `https://<hostname>/`)
@@ -321,9 +321,6 @@ All paths are relative to the root path of the SiteStore URL
 | vulnerability:rule:manage | VulnerabilityDetectionRuleCreate<br>VulnerabilityDetectionRuleUpdate<br>VulnerabilityDetectionRuleDelete | Allow creating, updating, and deleting of vulnerability detection rules. |
 | vulnerability:rule:read | VulnerabilityDetectionRuleRead | Allow reading of vulnerability detection rules. |
 | vulnerability:update | VulnerabilityDetectionUpdate | Allow updating state of vulnerability detections. |
-
----
-
 
 
 ---
