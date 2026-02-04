@@ -1,6 +1,5 @@
 # Dragos OT Security for Splunk App
 
-# Dragos OT Security for Splunk App
 
   ____                              
  |  _ \ _ __ __ _  __ _  ___  ___   
