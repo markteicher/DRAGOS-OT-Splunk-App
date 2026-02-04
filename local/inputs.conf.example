@@ -1,0 +1,81 @@
+#
+# Example Dragos Input Configuration
+# Copy this file to inputs.conf and configure your Dragos credentials
+#
+# To enable:
+# 1. Copy this file: cp inputs.conf.example inputs.conf
+# 2. Populate the required connection fields
+# 3. Restart Splunk: $SPLUNK_HOME/bin/splunk restart
+#
+
+[dragos://assets]
+dragos_url = https://<sitestoreURL>
+username = YOUR_DRAGOS_USERNAME
+password = YOUR_DRAGOS_PASSWORD
+interval = 3600
+index = dragos
+disabled = 0
+endpoint = /api/v2/assets
+
+[dragos://notifications]
+dragos_url = https://<sitestoreURL>
+username = YOUR_DRAGOS_USERNAME
+password = YOUR_DRAGOS_PASSWORD
+interval = 1800
+index = dragos
+disabled = 0
+endpoint = /api/v2/notifications
+
+[dragos://vulnerabilities]
+dragos_url = https://<sitestoreURL>
+username = YOUR_DRAGOS_USERNAME
+password = YOUR_DRAGOS_PASSWORD
+interval = 3600
+index = dragos
+disabled = 0
+endpoint = /api/v1/vulnerabilities
+
+[dragos://threat_intel]
+dragos_url = https://<sitestoreURL>
+username = YOUR_DRAGOS_USERNAME
+password = YOUR_DROS_PASSWORD
+interval = 86400
+index = dragos
+disabled = 0
+endpoint = /api/v1/threats
+
+[dragos://indicators]
+dragos_url = https://portal.dragos.com
+username = YOUR_DRAGOS_USERNAME
+password = YOUR_DRAGOS_PASSWORD
+interval = 86400
+index = dragos
+disabled = 0
+endpoint = /api/v1/indicators
+
+[dragos://products]
+dragos_url = https://portal.dragos.com
+username = YOUR_DRAGOS_USERNAME
+password = YOUR_DRAGOS_PASSWORD
+interval = 86400
+index = dragos
+disabled = 0
+endpoint = /api/v1/products
+
+[dragos://version]
+dragos_url = https://<sitestoreURL>
+username = YOUR_DRAGOS_USERNAME
+password = YOUR_DRAGOS_PASSWORD
+interval = 86400
+index = dragos
+disabled = 0
+endpoint = /api/v1/version
+
+[dragos://system_status]
+dragos_url = https://<sitestoreURL>
+username = YOUR_DRAGOS_USERNAME
+password = YOUR_DRAGOS_PASSWORD
+interval = 300
+index = dragos
+disabled = 0
+endpoint = /api/v1/status
