@@ -143,6 +143,68 @@ Dragos supports visibility across a wide range of OT environments, including:
 
 ---
 
+### Widely Used OT Protocols
+
+| Group | Family | Protocol Name |
+|------|--------|----------------|
+| ASHRAE | BACnet | BACapp |
+| ASHRAE | BACnet | BACnet |
+| ASHRAE | BACnet | BVLC |
+| CODESYS Group |  | CodeSys v3 |
+| CLPA | CC-Link | SLMP |
+| DNP.org |  | DNP3 |
+| HART Communication Foundation | ICS | HART-IP |
+| IEC | IEC 60870 | IEC 101 |
+| IEC | IEC 60870 | IEC 104 |
+| IEC | IEC 61784 | HSR PRP |
+| IEC | IEC 61850 | GOOSE |
+| IEC | IEC 61850 | SV |
+| IEC | IEC 61850 | MMS |
+| IEC | IEC 61850 | UCA2 (GSSE) |
+| Johnson Controls |  | Metasys Private Message |
+| NMEA |  | NMEA 0183 |
+| OMRON |  | FINS |
+| Phoenix Contact | PLC | DDI |
+| Phoenix Contact | PLC | OPC |
+| Red Lion Controls |  | Crimson Download Protocol |
+| Rockwell Automation |  | ENIP |
+| Rockwell Automation |  | CSP |
+| Rockwell Automation |  | PCCC |
+| Rockwell Automation |  | CIP |
+| Schneider Electric |  | UMAS |
+| Schneider Electric | AVEVA | OASyS DNA |
+| Schneider Electric | Foxboro | Comex |
+| Schneider Electric | Triconex | FW |
+| Schneider Electric | Triconex | P2P |
+| Schneider Electric | Triconex | TSAA |
+| Schneider Electric | Triconex | Tristation |
+| Schneider Electric | Wonderware | Suitelink |
+| Schweitzer Engineering Laboratories | SEL | ASCII |
+| Schweitzer Engineering Laboratories | SEL | FM |
+| Siemens |  | CAMP |
+| Siemens |  | NIPT |
+| Siemens |  | S7Comm |
+| Siemens |  | S7Comm-Plus |
+| Siemens | Profinet | DCP |
+| Siemens | Profinet | IO |
+| Siemens | Profinet | MRP |
+| Siemens | Profinet | MRRT |
+| Siemens | Profinet | PTCP |
+| Siemens | Profinet | RT |
+| TechnipFMC | Smith Meter | SMIP |
+| Yokogawa | Centum | Vnet/IP |
+| IEEE |  | C37.118 |
+| IEEE |  | Synchrophasor |
+| IEEE |  | PTP |
+| ISO |  | COTP |
+| LonWorks |  | LonTalk |
+| Modbus Organization |  | Modbus RTU |
+| Modbus Organization |  | Modbus TCP |
+| OPC Foundation |  | OPCUA |
+| OPC Foundation |  | OPCDA |
+
+
+---
 ## Data Collected
 
 ### Alerts / Detections
