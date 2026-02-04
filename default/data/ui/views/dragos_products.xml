@@ -1,0 +1,70 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_products.xml
+ Dragos OT Security for Splunk App
+ Products
+=============================================================================
+
+PURPOSE
+
+Displays all products retrieved from the Dragos Platform.
+
+DATA SOURCE
+
+GET /api/v1/products
+→ sourcetype=dragos:products
+
+Top-level fields:
+- tlp_level
+- title
+- executive_summary
+- updated_at
+- threat_level
+- serial
+- ioc_count
+- release_date
+- type
+- report_link
+- ioc_link
+
+Tag context:
+- tags{}.text
+- tags{}.tag_type
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Products</label>
+
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:products
+            | spath
+            | table
+                tlp_level
+                title
+                executive_summary
+                updated_at
+                threat_level
+                serial
+                ioc_count
+                release_date
+                type
+                report_link
+                ioc_link
+                tags{}.text
+                tags{}.tag_type
+            | sort - updated_at
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
