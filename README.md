@@ -205,6 +205,152 @@ Dragos supports visibility across a wide range of OT environments, including:
 
 
 ---
+
+### Sample of Supported IT Protocols
+
+| Group | Family | Protocol Name |
+|------|--------|----------------|
+| Cisco |  | CDP |
+| Cisco |  | Cisco VPN |
+| Cisco |  | HSRP |
+| Cisco |  | NetFlow |
+| Cisco | IT | VTP |
+| Cisco | Telecom | Skinny/SCCP |
+| IETF |  | ARP |
+| IETF |  | BGP |
+| IETF |  | CAPWAP |
+| IETF |  | DHCP |
+| IETF |  | Diameter |
+| IETF |  | DNS |
+| IETF |  | DTLS |
+| IETF |  | EGP |
+| IETF |  | FTP |
+| IETF |  | GRE |
+| IETF |  | HTTP |
+| IETF |  | HTTP Proxy |
+| IETF |  | IGMP |
+| IETF |  | IKEv2 |
+| IETF |  | IMAP |
+| IETF |  | IP in IP |
+| IETF |  | IPP |
+| IETF |  | IPSec |
+| IETF |  | Kerberos 5 |
+| IETF |  | LDAP |
+| IETF |  | LISP |
+| IETF |  | LLDP |
+| IETF |  | MDNS |
+| IETF |  | NFS |
+| IETF |  | NTP |
+| IETF |  | OCSP |
+| IETF |  | OSPF |
+| IETF |  | PGM |
+| IETF |  | PIM |
+| IETF |  | POP3 |
+| IETF |  | PPTP |
+| IETF |  | QUIC |
+| IETF |  | RFB / VNC |
+| IETF |  | RTCP |
+| IETF |  | RTMP |
+| IETF |  | RTP |
+| IETF |  | RTSP |
+| IETF |  | SCTP |
+| IETF |  | SIP |
+| IETF |  | SMTP |
+| IETF |  | SNMP |
+| IETF |  | SOCKS |
+| IETF |  | SPNEGO |
+| IETF |  | SSH |
+| IETF |  | SSDP |
+| IETF |  | STUN |
+| IETF |  | Syslog |
+| IETF |  | Telnet |
+| IETF |  | Teredo |
+| IETF |  | TFTP |
+| IETF |  | TLS |
+| IETF |  | TPKT |
+| IETF |  | VRRP |
+| IETF |  | WebSocket |
+| IETF | IoT | CoAP |
+| IETF | IPv6 | DHCPv6 |
+| IETF | IPv6 | NDP |
+| IETF | Radio | GTP |
+| IETF | Radio | GTP Prime |
+| IETF | Radio | GTP-C |
+| IETF | Radio | GTP-U |
+| Microsoft |  | RDP |
+| Microsoft |  | TDS or MSSQL-TDS |
+| Microsoft |  | WSD |
+| Microsoft | Active Directory | NTLM |
+| Microsoft | NetBIOS | NetBIOS Browser |
+| Microsoft | NetBIOS | NetBIOS Datagram |
+| Microsoft | NetBIOS | NetBIOS Name Service |
+| Microsoft | NetBIOS | NetBIOS over TCP |
+| Microsoft | NetBIOS | NetBIOS Stream Service |
+| Microsoft | SMB | SMB |
+| Microsoft | SMB | SMB Mailslot |
+| Open Group | DCS | DCERPC |
+| Open Group | DCS | DCOM |
+| Other |  | AFP |
+| Other |  | AJP |
+| Other |  | AMQP |
+| Other |  | AVASTSecureDNS |
+| Other |  | collectd |
+| Other |  | CORBA |
+| Other |  | CPHA |
+| Other |  | DHCP |
+| Other |  | Direct Connect |
+| Other |  | EAQ |
+| Other | HP VM Group Management |  |
+| Other |  | imo |
+| Other |  | Kontiki |
+| Other |  | MQTT |
+| Other |  | NNTP / Usenet |
+| Other |  | OpenVPN |
+| Other |  | PostgreSQL |
+| Other |  | Redis |
+| Other |  | RSH |
+| Other |  | RSYNC |
+| Other |  | RX |
+| Other |  | sFlow |
+| Other |  | SOAP |
+| Other |  | StealthNet |
+| Other |  | Thunder |
+| Other |  | TINC |
+| Other |  | UBNTAC2 |
+| Other |  | UltraSurf |
+| Other |  | VMware vCenter |
+| Other |  | Server |
+| Other |  | XDMCP |
+| Other |  | Zabix |
+| Other |  | ZeroMQ |
+| Automotive |  | SOMEIP |
+| Database |  | MySQL |
+| Desktop |  | Aimini |
+| Desktop |  | Applejuice |
+| File Sharing |  | FastTrack |
+| File Sharing |  | Gnutella |
+| File Sharing |  | eDonkey |
+| File Sharing |  | OpenFT |
+| Financial |  | FIX |
+| Messaging |  | NATS |
+| Messaging |  | Messaging |
+| Messaging |  | QQ |
+| Open Source |  | Checkmk |
+| Printer |  | Canon_BJNP |
+| Streaming |  | MPEG-DASH |
+| Telecom |  | Megaco |
+| Telecom |  | MGCP |
+| Telecom |  | SMPP |
+| Teleconferencing |  | H.323 |
+| VoIP |  | IAX |
+| VoIP |  | NOE |
+| VPN |  | ESP |
+| VPN |  | IPSec |
+| VPN |  | ISAKMP |
+| VPN |  | OpenVPN |
+| VPN |  | WireGuard |
+
+---
 ## Data Collected
 
 ### Alerts / Detections
