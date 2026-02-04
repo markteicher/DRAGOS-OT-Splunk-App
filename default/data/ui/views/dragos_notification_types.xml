@@ -1,0 +1,54 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_notification_types.xml
+ Dragos OT Security for Splunk App
+ Notification Types (Reference)
+=============================================================================
+
+PURPOSE
+
+Provides an authoritative, static reference list of notification types
+used by the Dragos platform.
+
+This view exists to support analyst understanding, documentation parity,
+and dashboard interpretation when working with Dragos notifications data.
+
+
+DATA SOURCE CONTEXT
+
+These values correspond to the `type` field returned by:
+
+  GET /api/v2/notifications
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Notification Types</label>
+
+  <row>
+    <panel>
+      <title>Dragos Notification Types</title>
+      <html>
+        <![CDATA[
+        <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+          <tr>
+            <th>Notification Type</th>
+          </tr>
+          <tr><td>Analytic</td></tr>
+          <tr><td>Anomaly</td></tr>
+          <tr><td>Asset</td></tr>
+          <tr><td>Baseline</td></tr>
+          <tr><td>Communication</td></tr>
+          <tr><td>Detection</td></tr>
+          <tr><td>Failure</td></tr>
+          <tr><td>Indicator</td></tr>
+          <tr><td>Network</td></tr>
+          <tr><td>System</td></tr>
+        </table>
+        ]]>
+      </html>
+    </panel>
+  </row>
+
+</dashboard>
