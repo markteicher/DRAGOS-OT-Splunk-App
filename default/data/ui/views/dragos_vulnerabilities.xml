@@ -2,56 +2,121 @@
 =============================================================================
  default/data/ui/views/dragos_vulnerabilities.xml
  Dragos OT Security for Splunk App
- Vulnerabilities — Hardware & Firmware
 =============================================================================
 
 PURPOSE
 
-Displays all vulnerability detections retrieved from the Dragos Platform
-using the Dragos REST API endpoint:
-
-  GET /api/v1/vulnerabilities?expand=asset,report
+Displays vulnerability records retrieved from the Dragos Platform.
 
 DATA SOURCE
 
-/api/v1/vulnerabilities
+GET /api/v1/vulnerabilities
 → sourcetype=dragos:vulnerabilities
 
-FIELDS DISPLAYED
+FIELDS
 
-Top-level vulnerability fields:
-- id
-- severity
-- status
-- firstSeenAt
-- lastSeenAt
-- count
-- cve
-- cvssScore
-- description
-- remediation
+Top-level:
+- value.id
+- confidence
+- risk
+- priority
+- disposition
+- firstObservedTime
+- lastObservedTime
 
-Asset context:
+Report:
+- value.report.id
+- value.report.type
+- value.report.expandedState
+- value.report.expansionTime
+- value.report.expanded.id
+- value.report.expanded.score.base
+- value.report.expanded.score.dragos
+- value.report.expanded.title
+- value.report.expanded.description
+- value.report.expanded.enumeration
+- value.report.expanded.severity
+- value.report.expanded.publishedTime
+- value.report.expanded.state
+- value.report.expanded.summaryHtml
+- value.report.expanded.mitigationsHtml{}
+- value.report.expanded.playbooksHtml{}
+- value.report.expanded.links{}.url
+- value.report.expanded.links{}.label
+
+Source:
+- source.name
+- source.product
+- source.type
+- source.vendor
+- source.version
+
+Ports:
+- ports{}.number
+- ports{}.protocols{}
+- ports{}.status
+
+Related Reports:
+- relatedReports{}.type
+- relatedReports{}.id
+- relatedReports{}.expandedState
+
+Tags:
+- tags{}.id
+- tags{}.label
+
+Reasons:
+- reasons{}.type
+- reasons{}.criteria{}
+- reasons{}.host
+
+Asset (context):
 - asset.id
-- asset.name
-- asset.ipAddress
-- asset.macAddress
-- asset.vendor
-- asset.model
-- asset.site
-- asset.zone
+- asset.type
+- asset.expanded.id
+- asset.expanded.name
+- asset.expanded.type
+- asset.expanded.class
+- asset.expanded.ot
+- asset.expanded.monitored
+- asset.expanded.vlan
+- asset.expanded.connectedRootDevice
+- asset.expanded.firstObservedTime
+- asset.expanded.lastObservedTime
 
-Report context:
-- report.id
-- report.title
-- report.publishedAt
-- report.reference
+Asset Zone:
+- asset.expanded.zone.id
+
+Asset Hardware:
+- asset.expanded.hardware.vendor
+- asset.expanded.hardware.model
+- asset.expanded.hardware.firmware
+
+Asset Addresses:
+- asset.expanded.addresses{}.id
+
+Asset Notification Counts:
+- asset.expanded.notificationCounts.id
+
+Asset Vulnerability Counts:
+- asset.expanded.vulnerabilityCounts.id
+
+Asset Labels:
+- asset.expanded.labels.zone_name
+- asset.expanded.labels.ObservedBy{}
+- asset.expanded.labels.Monitored-OT
+- asset.expanded.labels.Monitored-MAC
+- asset.expanded.labels.Monitored-OTPeer
+- asset.expanded.labels.Monitored-MACPeer
+- asset.expanded.labels.hardware.fidelity
+- asset.expanded.labels.LastReconciledTime
+- asset.expanded.labels.AttributesLastObservedDate
 
 =============================================================================
 -->
 
 <dashboard version="1.1" theme="light">
-  <label>Vulnerabilities — Hardware & Firmware</label>
+  <label>Vulnerabilities</label>
 
   <row>
     <panel>
@@ -61,29 +126,50 @@ Report context:
             index=* sourcetype=dragos:vulnerabilities
             | spath
             | table
-                id
-                severity
-                status
-                firstSeenAt
-                lastSeenAt
-                count
-                cve
-                cvssScore
-                description
-                remediation
+                value.id
+                confidence
+                risk
+                priority
+                disposition
+                firstObservedTime
+                lastObservedTime
+                value.report.id
+                value.report.expanded.score.base
+                value.report.expanded.score.dragos
+                value.report.expanded.title
+                value.report.expanded.severity
+                value.report.expanded.publishedTime
+                value.report.expanded.state
+                value.report.expanded.enumeration
+                value.report.expanded.description
+                value.report.expanded.summaryHtml
+                value.report.expanded.mitigationsHtml{}
+                value.report.expanded.playbooksHtml{}
+                value.report.expanded.links{}.url
+                value.report.expanded.links{}.label
+                ports{}.number
+                ports{}.protocols{}
+                ports{}.status
+                relatedReports{}.id
+                tags{}.id
+                tags{}.label
+                reasons{}.type
+                reasons{}.criteria{}
+                reasons{}.host
                 asset.id
-                asset.name
-                asset.ipAddress
-                asset.macAddress
-                asset.vendor
-                asset.model
-                asset.site
-                asset.zone
-                report.id
-                report.title
-                report.publishedAt
-                report.reference
-            | sort - lastSeenAt
+                asset.expanded.name
+                asset.expanded.type
+                asset.expanded.class
+                asset.expanded.ot
+                asset.expanded.monitored
+                asset.expanded.vlan
+                asset.expanded.hardware.vendor
+                asset.expanded.hardware.model
+                asset.expanded.hardware.firmware
+                asset.expanded.labels.zone_name
+                asset.expanded.labels.LastReconciledTime
+                asset.expanded.labels.AttributesLastObservedDate
+            | sort - lastObservedTime
           </query>
         </search>
         <option name="wrap">true</option>
