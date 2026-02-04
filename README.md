@@ -1,5 +1,17 @@
 # Dragos OT Security for Splunk App
 
+# Dragos OT Security for Splunk App
+
+  ____                              
+ |  _ \ _ __ __ _  __ _  ___  ___   
+ | | | | '__/ _` |/ _` |/ _ \/ __|  
+ | |_| | | | (_| | (_| | (_) \__ \  
+ |____/|_|  \__,_|\__, |\___/|___/  
+                   |___|           
+
+                 Dragos™
+---
+
 ## Overview
 
 Dragos OT Security is a purpose-built cybersecurity platform designed to protect **industrial control systems (ICS)** and **operational technology (OT)** environments.
