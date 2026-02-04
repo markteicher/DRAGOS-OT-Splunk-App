@@ -1,0 +1,124 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_ingest_status.xml
+ Dragos OT Security for Splunk App
+
+ Ingest Status Dashboard
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Ingest Status</label>
+
+  <description>
+    Visibility into Dragos data ingestion health, freshness, and volume.
+    All status logic is evaluated at search time using SPL.
+  </description>
+
+  <!-- =============================================================== -->
+  <!-- FILTERS                                                         -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <input type="time" token="time_range">
+        <label>Time Range</label>
+        <default>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+
+      <input type="dropdown" token="sourcetype">
+        <label>Sourcetype</label>
+        <choice value="*">All</choice>
+        <choice value="dragos:assets">Assets</choice>
+        <choice value="dragos:vulnerabilities">Vulnerabilities</choice>
+        <choice value="dragos:notifications">Notifications</choice>
+        <choice value="dragos:indicators">Indicators</choice>
+        <default>*</default>
+      </input>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- INGEST HEALTH SUMMARY                                           -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Ingest Health Overview</title>
+      <table>
+        <search>
+          <query>
+            index=dragos sourcetype=$sourcetype$
+            | stats
+                latest(_time) as last_event_time
+                count as event_count
+              by sourcetype
+            | eval age_minutes = round((now() - last_event_time) / 60, 1)
+            | eval ingest_status = case(
+                age_minutes <= 15, "Healthy",
+                age_minutes <= 60, "Delayed",
+                age_minutes > 60, "Stale"
+              )
+            | eval status_icon = case(
+                ingest_status="Healthy","🟢",
+                ingest_status="Delayed","🟡",
+                ingest_status="Stale","🔴"
+              )
+            | eval last_event_time = strftime(last_event_time, "%Y-%m-%d %H:%M:%S")
+            | table status_icon ingest_status sourcetype event_count last_event_time age_minutes
+            | sort sourcetype
+          </query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+        </search>
+
+        <option name="wrap">true</option>
+        <option name="count">20</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- EVENT VOLUME TREND                                              -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Ingest Volume Over Time</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=$sourcetype$
+            | timechart span=1h count
+          </query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- LAST SEEN BY SOURCETYPE                                         -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Last Seen Event by Sourcetype</title>
+      <table>
+        <search>
+          <query>
+            index=dragos sourcetype=$sourcetype$
+            | stats latest(_time) as last_seen by sourcetype
+            | eval last_seen = strftime(last_seen, "%Y-%m-%d %H:%M:%S")
+            | sort sourcetype
+          </query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+        </search>
+        <option name="count">20</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
