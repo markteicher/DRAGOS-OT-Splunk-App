@@ -1,0 +1,153 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_web_threat_intel.xml
+ Dragos OT Security for Splunk App
+ Web Threat Intelligence
+=============================================================================
+
+PURPOSE
+
+Analyst-facing web threat intelligence dashboard derived from Dragos
+indicator and threat intelligence data.
+
+This view focuses on:
+- Internet-facing / web-based threat indicators
+- Domains, IPs, URLs, and web-related activity
+- Threat severity and trend analysis
+- Actor and activity group attribution
+
+
+DATA SOURCES
+
+sourcetype = dragos:indicators
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Web Threat Intelligence</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: WEB THREAT SEVERITY OVERVIEW                            -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Web Threat Severity Distribution</title>
+      <chart>
+        <search>
+          <query>
+            sourcetype=dragos:indicators
+            | spath
+            | where match(category,"Web|Internet|HTTP|DNS")
+            | eval severity=coalesce(severity,"Unknown")
+            | stats count by severity
+            | eval severity_order=case(
+                severity="Critical",1,
+                severity="High",2,
+                severity="Medium",3,
+                severity="Low",4,
+                true(),5
+              )
+            | sort severity_order
+          </query>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: WEB INDICATOR TYPES                                     -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Web Indicator Types</title>
+      <chart>
+        <search>
+          <query>
+            sourcetype=dragos:indicators
+            | spath
+            | where match(category,"Web|Internet|HTTP|DNS")
+            | eval indicator_type=coalesce(type,"Unknown")
+            | stats count by indicator_type
+            | sort - count
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.barDirection">horizontal</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: WEB THREAT TREND                                        -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Web Threat Indicator Trend</title>
+      <chart>
+        <search>
+          <query>
+            sourcetype=dragos:indicators
+            | spath
+            | where match(category,"Web|Internet|HTTP|DNS")
+            | timechart span=1d count
+          </query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 4: ACTIVITY GROUP ATTRIBUTION                              -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Web Threat Activity Groups</title>
+      <table>
+        <search>
+          <query>
+            sourcetype=dragos:indicators
+            | spath
+            | where match(category,"Web|Internet|HTTP|DNS")
+            | mvexpand activity_groups{}
+            | rename activity_groups{} AS activity_group
+            | stats count AS indicator_count by activity_group
+            | sort - indicator_count
+          </query>
+        </search>
+        <option name="wrap">false</option>
+        <option name="rowNumbers">false</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 5: RECENT WEB INDICATORS                                   -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Recent Web Threat Indicators</title>
+      <table>
+        <search>
+          <query>
+            sourcetype=dragos:indicators
+            | spath
+            | where match(category,"Web|Internet|HTTP|DNS")
+            | eval indicator_value=coalesce(value,indicator)
+            | table _time indicator_value type severity category activity_groups
+            | sort - _time
+            | head 50
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
