@@ -1,0 +1,172 @@
+<!--
+=============================================================================
+ default/data/ui/views/setup.xml
+ Dragos OT Security for Splunk App
+ Setup Wizard
+=============================================================================
+
+SETUP WIZARD
+
+This setup wizard performs the complete configuration of the
+Dragos OT Security for Splunk App.
+
+From the user’s perspective, the setup wizard:
+
+- Validates connectivity to the Dragos Platform
+- Authenticates using provided credentials (API token)
+- Verifies required Dragos API access
+- Creates the specified Splunk index if it does not already exist
+- Stores credentials securely
+- Enables selected Dragos data collectors
+- Initializes required checkpoints for paginated APIs
+- Enables operational logging
+- Completes setup only on success, or fails with clear errors
+
+No manual configuration is required after this wizard completes.
+=============================================================================
+-->
+
+<form version="1.1" type="wizard">
+  <label>Dragos OT Security – Setup</label>
+
+  <description>
+    This wizard configures connectivity, storage, logging, and data
+    collection for the Dragos OT Security for Splunk App.
+  </description>
+
+  <!-- =============================================================== -->
+  <!-- STEP 1: DRAGOS PLATFORM CONNECTION                               -->
+  <!-- =============================================================== -->
+  <fieldset>
+    <legend>Dragos Platform Connection</legend>
+
+    <input type="text" token="dragos_url">
+      <label>Dragos Portal URL</label>
+      <help>Example: https://portal.dragos.com</help>
+      <validation>
+        <regex>^(?i)https?://.+</regex>
+        <message>URL must begin with http:// or https://</message>
+      </validation>
+    </input>
+
+    <input type="password" token="dragos_api_token">
+      <label>API Token</label>
+      <help>Paste your Dragos API token</help>
+    </input>
+  </fieldset>
+
+  <!-- =============================================================== -->
+  <!-- STEP 2: SPLUNK INDEX CONFIGURATION                               -->
+  <!-- =============================================================== -->
+  <fieldset>
+    <legend>Splunk Index</legend>
+
+    <input type="text" token="target_index">
+      <label>Target Index</label>
+      <help>
+        Enter the name of the Splunk index where Dragos data will be stored.
+        The index will be created during setup if it does not already exist.
+      </help>
+    </input>
+  </fieldset>
+
+  <!-- =============================================================== -->
+  <!-- STEP 3: OPERATIONAL LOGGING                                     -->
+  <!-- =============================================================== -->
+  <fieldset>
+    <legend>Operational Logging</legend>
+
+    <input type="dropdown" token="enable_logging">
+      <label>Enable Operational Logging</label>
+      <choice value="true">Enabled</choice>
+      <choice value="false">Disabled</choice>
+      <default>true</default>
+    </input>
+
+    <html>
+      <p>
+        When enabled, the app writes operational messages to Splunk
+        internal logs to support troubleshooting and auditing.
+      </p>
+    </html>
+  </fieldset>
+
+  <!-- =============================================================== -->
+  <!-- STEP 4: PROXY CONFIGURATION                                     -->
+  <!-- =============================================================== -->
+  <fieldset>
+    <legend>Proxy Configuration (Optional)</legend>
+
+    <input type="dropdown" token="proxy_mode">
+      <label>Proxy Mode</label>
+      <choice value="none">No Proxy</choice>
+      <choice value="proxy">Proxy (No Authentication)</choice>
+      <choice value="proxy_auth">Proxy (With Authentication)</choice>
+      <default>none</default>
+    </input>
+
+    <input type="text" token="proxy_url" depends="$proxy_mode!=none$">
+      <label>Proxy URL</label>
+    </input>
+
+    <input type="text" token="proxy_username" depends="$proxy_mode=proxy_auth$">
+      <label>Proxy Username</label>
+    </input>
+
+    <input type="password" token="proxy_password" depends="$proxy_mode=proxy_auth$">
+      <label>Proxy Password</label>
+    </input>
+  </fieldset>
+
+  <!-- =============================================================== -->
+  <!-- STEP 5: DATA COLLECTION SELECTION                               -->
+  <!-- =============================================================== -->
+  <fieldset>
+    <legend>Data Collection</legend>
+
+    <input type="checkbox" token="collectors">
+      <label>Select Data to Collect</label>
+
+      <!-- Core -->
+      <choice value="assets">Assets</choice>
+      <choice value="users">Users</choice>
+      <choice value="roles">Roles & Permissions</choice>
+
+      <!-- Detection / Intelligence -->
+      <choice value="notifications">Notifications</choice>
+      <choice value="alerts">Alerts</choice>
+      <choice value="vulnerabilities">Vulnerabilities</choice>
+      <choice value="threat_intel">Threat Intelligence</choice>
+      <choice value="indicators">Indicators</choice>
+
+      <!-- Platform / Admin -->
+      <choice value="system_health">System Health</choice>
+      <choice value="audit_logs">Audit Logs</choice>
+      <choice value="error_logs">Error Logs</choice>
+      <choice value="reports">Reports</choice>
+
+      <default>assets</default>
+      <default>notifications</default>
+      <default>vulnerabilities</default>
+      <default>system_health</default>
+    </input>
+  </fieldset>
+
+  <!-- =============================================================== -->
+  <!-- STEP 6: COMPLETE SETUP                                          -->
+  <!-- =============================================================== -->
+  <fieldset>
+    <legend>Complete Setup</legend>
+
+    <html>
+      <p>
+        Click <b>Finish</b> to validate connectivity, create required
+        resources, store credentials securely, and begin data ingestion.
+      </p>
+    </html>
+  </fieldset>
+
+  <submit>
+    <label>Finish Setup</label>
+  </submit>
+</form>
