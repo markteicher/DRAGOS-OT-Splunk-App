@@ -1,0 +1,153 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_threat_intel_executive_overview.xml
+ Dragos OT Security for Splunk App
+ Threat Intelligence — Executive Overview
+=============================================================================
+
+PURPOSE
+
+Executive-level threat intelligence dashboard derived from Dragos indicators.
+
+Answers, at a glance:
+- Are threats OT-facing or IT-facing?
+- Which kill-chain stages dominate?
+- Which activity groups persist over time?
+- Who are the top threat actors?
+- How severe is the current threat posture?
+
+
+DATA
+
+sourcetype = dragos:indicators
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Threat Intelligence — Executive Overview</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: EXEC SEVERITY ROLLUP                                    -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Threat Severity Distribution</title>
+      <chart>
+        <search>
+          <query>
+            sourcetype=dragos:indicators
+            | spath
+            | eval severity=coalesce(severity,"Unknown")
+            | stats count by severity
+            | eval severity_order=case(
+                severity="Critical",1,
+                severity="High",2,
+                severity="Medium",3,
+                severity="Low",4,
+                true(),5
+              )
+            | sort severity_order
+          </query>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: OT VS IT THREAT SPLIT                                   -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>OT vs IT Threat Split</title>
+      <chart>
+        <search>
+          <query>
+            sourcetype=dragos:indicators
+            | spath
+            | eval domain=case(
+                match(category,"OT|ICS|Industrial"),"OT",
+                match(category,"IT|Enterprise|Network"),"IT",
+                true(),"Unknown"
+              )
+            | stats count by domain
+          </query>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: KILL-CHAIN STAGE ROLLUPS                                -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Kill-Chain Stage Rollups</title>
+      <chart>
+        <search>
+          <query>
+            sourcetype=dragos:indicators
+            | spath
+            | eval kill_chain_stage=coalesce(kill_chain,"Unknown")
+            | stats count by kill_chain_stage
+            | sort - count
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.barDirection">horizontal</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 4: ACTIVITY GROUP HEATMAP                                  -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Activity Group Heatmap</title>
+      <chart>
+        <search>
+          <query>
+            sourcetype=dragos:indicators
+            | spath
+            | mvexpand activity_groups{}
+            | rename activity_groups{} AS activity_group
+            | timechart span=1d count by activity_group
+          </query>
+        </search>
+        <option name="charting.chart">heatmap</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 5: TOP THREAT ACTORS (EXEC STRIP)                          -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Top Threat Actors</title>
+      <table>
+        <search>
+          <query>
+            sourcetype=dragos:indicators
+            | spath
+            | mvexpand activity_groups{}
+            | rename activity_groups{} AS activity_group
+            | stats count AS indicator_count by activity_group
+            | sort - indicator_count
+            | head 10
+          </query>
+        </search>
+        <option name="wrap">false</option>
+        <option name="rowNumbers">false</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
