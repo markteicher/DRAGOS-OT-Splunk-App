@@ -2,25 +2,49 @@
 =============================================================================
  default/data/ui/views/dragos_notifications.xml
  Dragos OT Security for Splunk App
- Notifications & Detections
 =============================================================================
 
 PURPOSE
 
-Provides visibility into Dragos OT notifications and detections ingested
-from the Dragos Platform API.
+Displays notification records retrieved from the Dragos Platform.
 
-This view represents security-relevant events such as indicators,
-detections, and alerts derived from OT network telemetry and asset behavior.
+DATA SOURCE
 
-Data Source:
-- Dragos OT API: GET /api/v2/notifications
-- sourcetype: dragos:notifications
+GET /api/v2/notifications
+→ sourcetype=dragos:notifications
 
-This view is for:
-- Reviewing unresolved activity
-- Validating detections
-- Monitoring detection volume and severity
+FIELDS
+
+Top-level:
+- id
+- source
+- reviewed
+- state
+- retained
+- type
+- severity
+- summary
+- content
+- updatedAt
+- firstSeenAt
+- lastSeenAt
+- count
+
+Endpoint context:
+- endpoints{}.asset.id
+- endpoints{}.roles{}
+
+Detection context:
+- detection.id
+- detection.expansion
+- detection.detectionQuads{}
+- detection.threatInfo{}
+- detection.intelReports{}
+
+Meta (ingest context):
+- meta.pageNumber
+- meta.pageSize
+- meta.totalItems
 
 =============================================================================
 -->
@@ -28,169 +52,35 @@ This view is for:
 <dashboard version="1.1" theme="light">
   <label>Notifications</label>
 
-  <!-- =============================================================== -->
-  <!-- ROW 1: EXECUTIVE SUMMARY METRICS                                -->
-  <!-- =============================================================== -->
   <row>
     <panel>
-      <title>Total Notifications</title>
-      <single>
-        <search>
-          <query>
-            index=* sourcetype=dragos:notifications
-            | stats count
-          </query>
-        </search>
-        <option name="colorMode">block</option>
-        <option name="numberPrecision">0</option>
-      </single>
-    </panel>
-
-    <panel>
-      <title>Unresolved Notifications</title>
-      <single>
-        <search>
-          <query>
-            index=* sourcetype=dragos:notifications
-            | spath state
-            | search state="Unresolved"
-            | stats count
-          </query>
-        </search>
-        <option name="colorMode">block</option>
-      </single>
-    </panel>
-
-    <panel>
-      <title>Reviewed Notifications</title>
-      <single>
-        <search>
-          <query>
-            index=* sourcetype=dragos:notifications
-            | spath reviewed
-            | search reviewed=true
-            | stats count
-          </query>
-        </search>
-        <option name="colorMode">block</option>
-      </single>
-    </panel>
-
-    <panel>
-      <title>High Severity (≥ 3)</title>
-      <single>
-        <search>
-          <query>
-            index=* sourcetype=dragos:notifications
-            | spath severity
-            | where severity &gt;= 3
-            | stats count
-          </query>
-        </search>
-        <option name="colorMode">block</option>
-      </single>
-    </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 2: NOTIFICATIONS OVER TIME                                  -->
-  <!-- =============================================================== -->
-  <row>
-    <panel>
-      <title>Notifications Over Time</title>
-      <chart>
-        <search>
-          <query>
-            index=* sourcetype=dragos:notifications
-            | spath updatedAt
-            | eval _time=strptime(updatedAt,"%Y-%m-%dT%H:%M:%SZ")
-            | timechart span=1h count
-          </query>
-        </search>
-        <option name="charting.chart">line</option>
-        <option name="charting.legend.placement">bottom</option>
-      </chart>
-    </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 3: BREAKDOWN ANALYSIS                                       -->
-  <!-- =============================================================== -->
-  <row>
-    <panel>
-      <title>Notifications by State</title>
-      <chart>
-        <search>
-          <query>
-            index=* sourcetype=dragos:notifications
-            | spath state
-            | stats count by state
-            | sort - count
-          </query>
-        </search>
-        <option name="charting.chart">pie</option>
-      </chart>
-    </panel>
-
-    <panel>
-      <title>Notifications by Type</title>
-      <chart>
-        <search>
-          <query>
-            index=* sourcetype=dragos:notifications
-            | spath type
-            | stats count by type
-            | sort - count
-          </query>
-        </search>
-        <option name="charting.chart">bar</option>
-        <option name="charting.legend.placement">none</option>
-      </chart>
-    </panel>
-
-    <panel>
-      <title>Notifications by Source</title>
-      <chart>
-        <search>
-          <query>
-            index=* sourcetype=dragos:notifications
-            | spath source
-            | stats count by source
-            | sort - count
-          </query>
-        </search>
-        <option name="charting.chart">bar</option>
-        <option name="charting.legend.placement">none</option>
-      </chart>
-    </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 4: RECENT NOTIFICATIONS TABLE                               -->
-  <!-- =============================================================== -->
-  <row>
-    <panel>
-      <title>Recent Notifications</title>
       <table>
         <search>
           <query>
             index=* sourcetype=dragos:notifications
             | spath
-            | eval first_seen=strptime(firstSeenAt,"%Y-%m-%dT%H:%M:%SZ")
-            | eval last_seen=strptime(lastSeenAt,"%Y-%m-%dT%H:%M:%SZ")
-            | eval updated=strptime(updatedAt,"%Y-%m-%dT%H:%M:%SZ")
-            | sort - updated
             | table
-                updated
-                state
-                severity
-                type
+                id
                 source
-                summary
-                count
                 reviewed
+                state
                 retained
-            | head 50
+                type
+                severity
+                summary
+                content
+                updatedAt
+                firstSeenAt
+                lastSeenAt
+                count
+                endpoints{}.asset.id
+                endpoints{}.roles{}
+                detection.id
+                detection.expansion
+                detection.detectionQuads{}
+                detection.threatInfo{}
+                detection.intelReports{}
+            | sort - updatedAt
           </query>
         </search>
         <option name="wrap">true</option>
