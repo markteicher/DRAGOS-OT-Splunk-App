@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "2.0.0",
+  "info": {
+    "id": {
+      "group": "dragos",
+      "name": "dragos_ot_security_for_splunk",
+      "version": "1.0.0"
+    },
+    "title": "Dragos OT Security for Splunk App",
+    "description": "Splunk application for ingesting and analyzing data from the Dragos OT Security Platform using Dragos REST APIs.",
+    "author": [
+      {
+        "name": "Mark Teicher"
+      }
+    ],
+    "license": {
+      "name": "MIT"
+    },
+    "releaseDate": "2026-02-01"
+  },
+  "dependencies": {
+    "splunk": {
+      "minVersion": "8.2.0"
+    }
+  },
+  "supportedDeployments": [
+    "standalone",
+    "distributed",
+    "shc",
+    "cloud"
+  ],
+  "platform": {
+    "os": [
+      "linux"
+    ],
+    "architecture": [
+      "x86_64"
+    ]
+  }
+}
