@@ -1,0 +1,155 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_dns_threat_intel.xml
+ Dragos OT Security for Splunk App
+
+ DNS Threat Intelligence Dashboard
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>DNS Threat Intelligence</label>
+
+  <description>
+    Analyze DNS-based threat intelligence observed in Dragos-monitored OT
+    environments. 
+  </description>
+
+  <!-- =============================================================== -->
+  <!-- FILTERS                                                         -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <input type="time" token="time_range">
+        <label>Time Range</label>
+        <default>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+
+      <input type="dropdown" token="severity">
+        <label>Severity</label>
+        <choice value="*">All</choice>
+        <choice value="Critical">Critical</choice>
+        <choice value="High">High</choice>
+        <choice value="Medium">Medium</choice>
+        <choice value="Low">Low</choice>
+        <default>*</default>
+      </input>
+
+      <input type="dropdown" token="threat_type">
+        <label>Threat Type</label>
+        <choice value="*">All</choice>
+        <choice value="C2">C2</choice>
+        <choice value="Malware">Malware</choice>
+        <choice value="Phishing">Phishing</choice>
+        <choice value="Reconnaissance">Reconnaissance</choice>
+        <default>*</default>
+      </input>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- SUMMARY KPIs                                                    -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Threat Volume by Severity</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:dns:threat_intel
+            severity=$severity$
+            threat_type=$threat_type$
+            | stats count by severity
+          </query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+        </search>
+        <option name="charting.chart">column</option>
+      </chart>
+    </panel>
+
+    <panel>
+      <title>Top Threat Categories</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:dns:threat_intel
+            severity=$severity$
+            threat_type=$threat_type$
+            | stats count by category
+            | sort - count
+            | head 10
+          </query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- DETAILED TABLE WITH ICONS                                       -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>DNS Threat Intelligence Events</title>
+      <table>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:dns:threat_intel
+            severity=$severity$
+            threat_type=$threat_type$
+            | eval severity_icon=case(
+                severity="Critical","🔴",
+                severity="High","🟠",
+                severity="Medium","🟡",
+                severity="Low","🟢",
+                true(),"⚪"
+              )
+            | eval threat_icon=case(
+                threat_type="C2","🕸️",
+                threat_type="Malware","🦠",
+                threat_type="Phishing","🎣",
+                threat_type="Reconnaissance","👁️",
+                true(),"❓"
+              )
+            | table _time severity_icon severity threat_icon threat_type domain ip category confidence source
+            | sort - _time
+          </query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+        </search>
+
+        <option name="count">20</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- TRENDING                                                       -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>DNS Threat Trend</title>
+      <chart>
+        <search>
+          <query>
+            index=dragos sourcetype=dragos:dns:threat_intel
+            severity=$severity$
+            threat_type=$threat_type$
+            | timechart span=1h count
+          </query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+      </chart>
+    </panel>
+  </row>
+
+</dashboard>
