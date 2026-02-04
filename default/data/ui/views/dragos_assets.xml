@@ -1,0 +1,147 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_assets.xml
+ Dragos OT Security for Splunk App
+=============================================================================
+
+PURPOSE
+
+Displays asset records retrieved from the Dragos Platform.
+
+DATA SOURCE
+
+GET /api/v2/assets
+→ sourcetype=dragos:assets
+
+FIELDS
+
+Top-level:
+- id
+- name
+- type
+- class
+- connectedRootDevice
+- monitored
+- firstObservedTime
+- lastObservedTime
+
+Zone:
+- zone.id
+- zone.name
+- zone.expansion
+- zone.description
+
+Operating System:
+- os.family
+- os.full
+- os.kernel
+- os.name
+- os.platform
+- os.version
+
+Tags:
+- tags{}
+
+Addresses:
+- addresses{}.id
+- addresses{}.addressType
+- addresses{}.value
+- addresses{}.expansion
+- addresses{}.scope.type
+- addresses{}.scope.id
+- addresses{}.firstObservedTime
+- addresses{}.lastObservedTime
+- addresses{}.observers{}
+
+Connected Assets:
+- connectedAssets{}
+
+Notification Counts:
+- notificationCounts.total
+- notificationCounts.critical
+- notificationCounts.high
+- notificationCounts.medium
+- notificationCounts.low
+
+Vulnerability Counts:
+- vulnerabilityCounts.total
+- vulnerabilityCounts.critical
+- vulnerabilityCounts.high
+- vulnerabilityCounts.medium
+- vulnerabilityCounts.low
+
+Baselines:
+- baselines{}
+
+Labels:
+- labels.zone_name
+- labels.LastReconciledTime
+- labels.AttributesLastObservedDate
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>Assets</label>
+
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:assets
+            | spath
+            | table
+                id
+                name
+                type
+                class
+                connectedRootDevice
+                monitored
+                firstObservedTime
+                lastObservedTime
+                zone.id
+                zone.name
+                zone.expansion
+                zone.description
+                os.family
+                os.full
+                os.kernel
+                os.name
+                os.platform
+                os.version
+                tags{}
+                addresses{}.id
+                addresses{}.addressType
+                addresses{}.value
+                addresses{}.expansion
+                addresses{}.scope.type
+                addresses{}.scope.id
+                addresses{}.firstObservedTime
+                addresses{}.lastObservedTime
+                addresses{}.observers{}
+                connectedAssets{}
+                notificationCounts.total
+                notificationCounts.critical
+                notificationCounts.high
+                notificationCounts.medium
+                notificationCounts.low
+                vulnerabilityCounts.total
+                vulnerabilityCounts.critical
+                vulnerabilityCounts.high
+                vulnerabilityCounts.medium
+                vulnerabilityCounts.low
+                baselines{}
+                labels.zone_name
+                labels.LastReconciledTime
+                labels.AttributesLastObservedDate
+            | sort name
+          </query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
