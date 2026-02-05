@@ -1,8 +1,49 @@
 #!/usr/bin/env python
 # encoding: utf-8
+
 """
-Dragos Email Alert Action
-Sends email notifications for Dragos alerts and notifications
+/bin/dragos_email_alert.py
+
+Dragos OT Security for Splunk App
+Email Alert Action
+
+========================================================================
+FIELDS— ALERT ACTION PAYLOAD
+========================================================================
+
+Payload structure:
+
+payload
+├── configuration
+│   ├── to                    (string, comma-separated)
+│   ├── cc                    (string, comma-separated, optional)
+│   ├── subject               (string)
+│   ├── message               (string)
+│   ├── priority              (string: high | normal | low)
+│   ├── include_results       (string: "1" | "0")
+│   ├── include_link          (string: "1" | "0")
+│   ├── smtp_server           (string)
+│   ├── smtp_port             (string/int)
+│   ├── smtp_use_tls          (string: "1" | "0")
+│   ├── smtp_user             (string, optional)
+│   ├── smtp_password         (string, optional)
+│   ├── from_address          (string)
+│
+├── result                    (dict, OPTIONAL)
+│   ├── *                     (ALL fields passed through verbatim)
+│   └── _*                    (ignored — Splunk internal fields)
+│
+├── results_link              (string, OPTIONAL)
+│
+========================================================================
+DESIGN PRINCIPLES
+========================================================================
+- No field normalization
+- No schema assumptions
+- No enrichment
+- Raw key/value passthrough
+- HTML rendering is presentation-only
+- Splunk owns payload structure
 """
 
 import sys
@@ -15,17 +56,24 @@ from email.mime.multipart import MIMEMultipart
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 
 
+# ----------------------------------------------------------------------
+# Email sender
+# ----------------------------------------------------------------------
 def send_email(config, payload):
-    """Send email notification"""
+    """
+    Send email notification using Splunk-provided payload
+    """
 
     # ------------------------------------------------------------------
-    # Alert configuration (from alert_actions.conf)
+    # Alert configuration (alert_actions.conf)
     # ------------------------------------------------------------------
     to_addresses = config.get("to", "").split(",")
     cc_addresses = config.get("cc", "").split(",") if config.get("cc") else []
+
     subject = config.get("subject", "Dragos Alert")
     message_body = config.get("message", "")
     priority = config.get("priority", "normal")
+
     include_results = config.get("include_results", "1") == "1"
     include_link = config.get("include_link", "1") == "1"
 
@@ -35,6 +83,7 @@ def send_email(config, payload):
     smtp_server = config.get("smtp_server", "localhost")
     smtp_port = int(config.get("smtp_port", 25))
     smtp_use_tls = config.get("smtp_use_tls", "0") == "1"
+
     smtp_user = config.get("smtp_user", "")
     smtp_password = config.get("smtp_password", "")
     from_address = config.get("from_address", "splunk@localhost")
@@ -46,6 +95,7 @@ def send_email(config, payload):
     msg["Subject"] = subject
     msg["From"] = from_address
     msg["To"] = ", ".join(to_addresses)
+
     if cc_addresses:
         msg["Cc"] = ", ".join(cc_addresses)
 
@@ -81,12 +131,11 @@ def send_email(config, payload):
     """
 
     # ------------------------------------------------------------------
-    # Include Dragos result fields (raw, no assumptions)
+    # Include raw result fields (verbatim passthrough)
     # ------------------------------------------------------------------
     if include_results and payload.get("result"):
-        result = payload["result"]
         html_body += "<h3>Alert Details</h3><table>"
-        for key, value in result.items():
+        for key, value in payload["result"].items():
             if not key.startswith("_"):
                 html_body += f"<tr><th>{key}</th><td>{value}</td></tr>"
         html_body += "</table>"
@@ -117,11 +166,9 @@ def send_email(config, payload):
     # Send email
     # ------------------------------------------------------------------
     try:
+        server = smtplib.SMTP(smtp_server, smtp_port)
         if smtp_use_tls:
-            server = smtplib.SMTP(smtp_server, smtp_port)
             server.starttls()
-        else:
-            server = smtplib.SMTP(smtp_server, smtp_port)
 
         if smtp_user and smtp_password:
             server.login(smtp_user, smtp_password)
@@ -136,8 +183,10 @@ def send_email(config, payload):
         return False, str(e)
 
 
+# ----------------------------------------------------------------------
+# Entrypoint
+# ----------------------------------------------------------------------
 def main():
-    """Entry point for Splunk alert action"""
 
     if len(sys.argv) < 2:
         print("ERROR: No payload file provided", file=sys.stderr)
