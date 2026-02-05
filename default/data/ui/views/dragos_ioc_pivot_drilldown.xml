@@ -1,0 +1,141 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_ioc_pivot_drilldown.xml
+ Dragos OT Security for Splunk App
+ IOC Pivot — Drilldown
+=============================================================================
+
+PURPOSE
+
+Single-IOC investigation dashboard used to pivot from an individual
+indicator (IP, domain, or URL) into related threat intelligence context.
+
+This view supports analyst workflows.
+
+ANALYST QUESTIONS ANSWERED
+
+- What other indicators are related to this IOC?
+- Where does this IOC sit in the kill chain?
+- Which activity groups are associated?
+- Is activity persistent or episodic over time?
+
+SCOPING
+
+User-selected IOC value via dashboard input.
+
+DATA SOURCE
+
+/api/v1/indicators
+sourcetype=dragos:indicators
+
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>IOC Pivot — Drilldown</label>
+
+  <!-- =============================================================== -->
+  <!-- INPUT: IOC VALUE                                               -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <input type="text" token="ioc_value">
+        <label>Indicator Value (IP / Domain / URL)</label>
+      </input>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: RELATED INDICATORS                                      -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Related Indicators</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | search value="$ioc_value$"
+            | mvexpand related_indicators{}
+            | rename related_indicators{} as related_indicator
+            | stats count as occurrences by related_indicator
+            | sort - occurrences
+          </query>
+        </search>
+        <option name="wrap">false</option>
+        <option name="rowNumbers">false</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: KILL-CHAIN STAGE                                        -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Kill-Chain Stage</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | search value="$ioc_value$"
+            | eval kill_chain_stage=coalesce(kill_chain,"Unknown")
+            | stats count by kill_chain_stage
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.barDirection">horizontal</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: ACTIVITY GROUP ASSOCIATION                              -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Associated Activity Groups</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | search value="$ioc_value$"
+            | mvexpand activity_groups{}
+            | rename activity_groups{} as activity_group
+            | stats count by activity_group
+            | sort - count
+          </query>
+        </search>
+        <option name="wrap">false</option>
+        <option name="rowNumbers">false</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 4: SIGHTINGS OVER TIME                                     -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>IOC Sightings Over Time</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | search value="$ioc_value$"
+            | timechart span=1d count
+          </query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+</dashboard>
