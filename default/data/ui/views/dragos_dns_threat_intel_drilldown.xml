@@ -1,0 +1,136 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_dns_threat_intel_drilldown.xml
+ Dragos OT Security for Splunk App
+ DNS Threat Intelligence — Drilldown
+=============================================================================
+
+PURPOSE
+
+Focused DNS threat intelligence drilldown dashboard scoped strictly to
+DNS-related indicators. Designed to pivot from Web Threat Intelligence
+into DNS behavior analysis.
+
+SCOPING
+
+indicator_type = domain OR dns
+
+DATA SOURCE
+
+/api/v1/indicators
+sourcetype=dragos:indicators
+
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>DNS Threat Intelligence — Drilldown</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: DOMAIN FREQUENCY (DRILLDOWN ENABLED)                     -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Most Observed Malicious Domains</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | search indicator_type IN ("domain","dns")
+            | stats count as sightings by value
+            | sort - sightings
+            | head 20
+          </query>
+        </search>
+        <drilldown>
+          <link>
+            <![CDATA[
+              search?q=index=* sourcetype=dragos:indicators value="$row.value$"
+            ]]>
+          </link>
+        </drilldown>
+        <option name="wrap">false</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: DNS SIGHTINGS TREND                                      -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>DNS Indicator Sightings Over Time</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | search indicator_type IN ("domain","dns")
+            | timechart span=1d count
+          </query>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: ACTIVITY GROUP ATTRIBUTION (DRILLDOWN ENABLED)           -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>DNS Indicators by Activity Group</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | search indicator_type IN ("domain","dns")
+            | mvexpand activity_groups{}
+            | rename activity_groups{} as activity_group
+            | stats count by activity_group
+            | sort - count
+          </query>
+        </search>
+        <drilldown>
+          <link>
+            <![CDATA[
+              search?q=index=* sourcetype=dragos:indicators activity_groups="$click.value$"
+            ]]>
+          </link>
+        </drilldown>
+        <option name="charting.chart">bar</option>
+        <option name="charting.barDirection">horizontal</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 4: FIRST / LAST SEEN CONTEXT                                -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>DNS Indicator Temporal Context</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | search indicator_type IN ("domain","dns")
+            | stats
+                earliest(first_seen) as first_seen
+                latest(last_seen) as last_seen
+                by value confidence status
+            | sort - last_seen
+          </query>
+        </search>
+        <option name="wrap">false</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
