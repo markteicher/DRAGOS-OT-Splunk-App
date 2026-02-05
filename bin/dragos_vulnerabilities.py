@@ -115,19 +115,8 @@ value.asset.expanded.labels.Monitored-MAC
 value.asset.expanded.labels.Monitored-OTPeer
 value.asset.expanded.labels.Monitored-MACPeer
 value.asset.expanded.labels.hardware.fidelity
-value.asset.expanded.labels.LastReconciledTime
-value.asset.expanded.labels.AttributesLastObservedDate
 
-========================================================================
-DESIGN PRINCIPLES
-========================================================================
-- Cloud-safe, AppInspect-safe
-- One Splunk event per vulnerability object
-- Full JSON preserved
-- Zero normalization
-- Zero enrichment
-- Zero field opinionation
-- SPL is responsible for interpretation
+===============================================================
 """
 
 from datetime import datetime
