@@ -1,0 +1,133 @@
+<!--
+=============================================================================
+ default/data/ui/views/dragos_url_threat_intel_drilldown.xml
+ Dragos OT Security for Splunk App
+ URL Threat Intelligence — Drilldown
+=============================================================================
+
+PURPOSE
+
+Drilldown dashboard for web-based threat delivery
+infrastructure. Focuses exclusively on URL / HTTP / HTTPS indicators.
+
+This view supports triage and investigation of:
+- Malicious URLs
+- Delivery infrastructure trends
+- Activity group attribution
+- Severity-based prioritization
+
+SCOPING
+
+indicator_type IN ("url","http","https")
+
+DATA SOURCE
+
+/api/v1/indicators
+sourcetype=dragos:indicators
+
+
+=============================================================================
+-->
+
+<dashboard version="1.1" theme="light">
+  <label>URL Threat Intelligence — Drilldown</label>
+
+  <!-- =============================================================== -->
+  <!-- ROW 1: SEVERITY DISTRIBUTION                                   -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>URL Indicator Severity Distribution</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | search indicator_type IN ("url","http","https")
+            | stats count by confidence
+          </query>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: MALICIOUS URL TREND                                     -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Malicious URL Activity Over Time</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | search indicator_type IN ("url","http","https")
+            | timechart span=1d count
+          </query>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: HOSTING ASN DISTRIBUTION (IF PRESENT)                   -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Hosting ASN Attribution</title>
+      <table>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | search indicator_type IN ("url","http","https")
+            | where isnotnull(asn)
+            | stats count as indicators by asn
+            | sort - indicators
+            | head 15
+          </query>
+        </search>
+        <option name="wrap">false</option>
+        <option name="rowNumbers">false</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- =============================================================== -->
+  <!-- ROW 4: RELATED ACTIVITY GROUPS (DRILLDOWN ENABLED)             -->
+  <!-- =============================================================== -->
+  <row>
+    <panel>
+      <title>Related Activity Groups</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:indicators
+            | spath
+            | search indicator_type IN ("url","http","https")
+            | mvexpand activity_groups{}
+            | rename activity_groups{} as activity_group
+            | stats count by activity_group
+            | sort - count
+          </query>
+        </search>
+        <drilldown>
+          <link>
+            <![CDATA[
+              search?q=index=* sourcetype=dragos:indicators activity_groups="$click.value$"
+            ]]>
+          </link>
+        </drilldown>
+        <option name="charting.chart">bar</option>
+        <option name="charting.barDirection">horizontal</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+
+</dashboard>
