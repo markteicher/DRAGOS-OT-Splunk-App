@@ -7,110 +7,162 @@
 
 PURPOSE
 
-Provides application metadata, versioning information, and references
-for the Dragos OT Security for Splunk App. This view is informational only.
+Provides application metadata, versioning information, references,
+capabilities, intended audience guidance, and operational categories
+for the Dragos OT Security for Splunk App.
+
+This dashboard is informational only.
+
+DESIGN
+
+Follows the established multi-panel About dashboard pattern used across
+enterprise Splunk applications:
+- Row 1: Version / Licensing / References / Capabilities
+- Row 2: Application Information / Intended Audience / Operational Categories
+
+This structure is intentionally documentation-heavy and presentation-stable
+to support enterprise-grade packaging, review, and long-term maintenance.
 
 =============================================================================
 -->
-
 <dashboard version="1.1" theme="light">
-  <label>About</label>
+  <label>About Dragos OT Security for Splunk App</label>
 
   <!-- =============================================================== -->
-  <!-- ROW 1: APPLICATION INFORMATION                                  -->
+  <!-- ROW 1: VERSION / LICENSING / REFERENCES / CAPABILITIES         -->
+  <!-- =============================================================== -->
+
+  <!-- =============================================================== -->
+  <!-- ROW 2: APPLICATION INFORMATION                                  -->
+  <!-- =============================================================== -->
+
+  <!-- =============================================================== -->
+  <!-- ROW 3: INTENDED AUDIENCE                                        -->
+  <!-- =============================================================== -->
+
+  <!-- =============================================================== -->
+  <!-- ROW 4: OPERATIONAL CATEGORIES                                   -->
   <!-- =============================================================== -->
   <row>
     <panel>
-      <title>Application Information</title>
+      <title>🧩 Version Information</title>
       <html>
-        <![CDATA[
-        <table>
-          <tr><td><strong>Application</strong></td><td>Dragos OT Security for Splunk App</td></tr>
-          <tr><td><strong>Purpose</strong></td><td>Operational visibility and analysis of Dragos OT Security data within Splunk</td></tr>
-          <tr><td><strong>Integration Type</strong></td><td>REST API ingestion</td></tr>
-          <tr><td><strong>Data Format</strong></td><td>JSON</td></tr>
-          <tr><td><strong>Splunk Compatibility</strong></td><td>Splunk Enterprise / Splunk Cloud</td></tr>
-        </table>
-        ]]>
+        <p>
+          <strong>App Version:</strong> 1.0.0</p>
+        <p>
+          <strong>Platform:</strong> Dragos OT Security</p>
+        <p>
+          <strong>Build Type:</strong> Standalone Splunk Application</p>
       </html>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 2: VERSIONING                                               -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
-      <title>Version Information</title>
+      <title>⚖️ Licensing</title>
       <html>
-        <![CDATA[
-        <table>
-          <tr><td><strong>App Version</strong></td><td>1.0.0</td></tr>
-          <tr><td><strong>Dragos API Version</strong></td><td>v1</td></tr>
-          <tr><td><strong>Build Type</strong></td><td>Single App (TA + UI)</td></tr>
-        </table>
-        ]]>
+        <p>Dragos OT Security is a commercial industrial cybersecurity platform.</p>
+        <p>This Splunk App is an independent integration and is not an official Dragos product.</p>
+        <p>Use of the Dragos platform is governed by Dragos licensing terms.</p>
       </html>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 3: ATTRIBUTION                                              -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
-      <title>Attribution & Licensing</title>
+      <title>🔗 References</title>
       <html>
-        <![CDATA[
-        <p>
-          Dragos is a registered trademark of Dragos, Inc.
-        </p>
-        <p>
-          This Splunk App is an independent integration and is not an official
-          Dragos product unless explicitly stated otherwise.
-        </p>
-        <p>
-          Use of the Dragos OT Security platform is governed by the applicable
-          Dragos license agreement.
-        </p>
-        ]]>
+        <p>https://www.dragos.com</p>
+        <p>https://portal.dragos.com</p>
+        <p>https://portal.dragos.com/api/v1/doc/index.html</p>
+        <p>https://docs.splunk.com</p>
       </html>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 4: REFERENCES                                               -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
-      <title>References</title>
+      <title>🛠️ Capabilities</title>
       <html>
-        <![CDATA[
         <ul>
-          <li>
-            <a href="https://www.dragos.com" target="_blank">
-              Dragos Website
-            </a>
-          </li>
-          <li>
-            <a href="https://portal.dragos.com" target="_blank">
-              Dragos Customer Portal
-            </a>
-          </li>
-          <li>
-            <a href="https://portal.dragos.com/api/v1/doc/index.html" target="_blank">
-              Dragos Platform API Documentation
-            </a>
-          </li>
-          <li>
-            <a href="https://docs.splunk.com" target="_blank">
-              Splunk Documentation
-            </a>
-          </li>
+          <li>OT Asset Visibility</li>
+          <li>Threat Detection</li>
+          <li>Alert Enrichment</li>
+          <li>Operational Risk Visibility</li>
+          <li>Threat Intelligence Context</li>
+          <li>Incident Investigation Support</li>
+          <li>Industrial Environment Monitoring</li>
         </ul>
-        ]]>
       </html>
     </panel>
   </row>
+  <row>
+    <panel>
+      <title>📦 Application Information</title>
+      <html>
+        <p>
+          <strong>Application Name:</strong> Dragos OT Security for Splunk</p>
 
+        <p>
+          <strong>What is Dragos OT Security:</strong>
+        </p>
+        <p>
+        Dragos OT Security is an industrial cybersecurity platform designed to
+        provide visibility into industrial assets, threats, and operational
+        cybersecurity events across operational technology environments.
+        </p>
+
+        <p>
+          <strong>Why This Application Exists:</strong>
+        </p>
+        <p>
+        This Splunk application operationalizes Dragos platform data inside Splunk,
+        transforming OT security and operational telemetry into searchable,
+        correlated, and analyzable records supporting monitoring,
+        investigation, and industrial cyber defense operations.
+        </p>
+
+        <p>
+          <strong>Integration Type:</strong> REST API</p>
+        <p>
+          <strong>Data Format:</strong> JSON</p>
+      </html>
+    </panel>
+    <panel>
+      <title>👥 Intended Audience</title>
+      <html>
+        <ul>
+          <li>Security Operations Teams</li>
+          <li>OT Security Analysts</li>
+          <li>Security Engineers</li>
+          <li>SOC and Incident Response Teams</li>
+          <li>Industrial Cybersecurity Stakeholders</li>
+        </ul>
+
+        <p>
+          <strong>Ideal Use Case Scenarios:</strong>
+        </p>
+        <ul>
+          <li>Industrial organizations requiring OT visibility</li>
+          <li>Teams monitoring OT security events in Splunk</li>
+          <li>Organizations correlating Dragos data with other enterprise telemetry</li>
+        </ul>
+      </html>
+    </panel>
+    <panel>
+      <title>📊 Operational Categories</title>
+      <html>
+        <ul>
+          <li>OT Security Monitoring</li>
+          <li>Industrial Asset Visibility</li>
+          <li>Threat Intelligence Context</li>
+          <li>Alert and Event Enrichment</li>
+          <li>Incident Investigation</li>
+          <li>Operational Risk Monitoring</li>
+          <li>Security Operations Integration</li>
+        </ul>
+
+        <p>
+          <strong>Solutions:</strong>
+        </p>
+        <ul>
+          <li>Industrial Networks</li>
+          <li>Critical Infrastructure</li>
+          <li>Manufacturing</li>
+          <li>Energy and Utilities</li>
+        </ul>
+      </html>
+    </panel>
+  </row>
 </dashboard>
