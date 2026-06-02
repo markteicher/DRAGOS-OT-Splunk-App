@@ -21,16 +21,12 @@ This dashboard is informational only:
 - No enrichment
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Component ↔ API ↔ View Mapping</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Component ↔ API ↔ View Mapping</label>
   <row>
     <panel>
-      <title>Dragos Component to API and Splunk Mapping</title>
       <html>
-        <![CDATA[
+    
         <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
           <tr>
             <th>Component</th>
@@ -65,7 +61,7 @@ This dashboard is informational only:
           </tr>
 
           <tr>
-            <td>Vulnerabilities (Hardware & Firmware)</td>
+            <td>Vulnerabilities (Hardware and Firmware)</td>
             <td>/api/v1/vulnerabilities?expand=asset,report</td>
             <td>GET</td>
             <td>dragos_vulnerabilities.xml</td>
@@ -73,7 +69,7 @@ This dashboard is informational only:
           </tr>
 
           <tr>
-            <td>Vulnerabilities (Software & OS)</td>
+            <td>Vulnerabilities (Software and Operating Systems)</td>
             <td>/api/v2/vulnerabilities?expand=asset,softwarePackage,operatingSystem</td>
             <td>GET</td>
             <td>dragos_software_os_vulnerabilities.xml</td>
@@ -105,9 +101,8 @@ This dashboard is informational only:
           </tr>
 
         </table>
-        ]]>
+      
       </html>
     </panel>
   </row>
-
 </dashboard>
