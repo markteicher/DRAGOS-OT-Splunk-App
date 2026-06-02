@@ -1,23 +1,20 @@
-<!--
-=============================================================================
- default/data/ui/views/dragos_dns_threat_intel.xml
- Dragos OT Security for Splunk App
-
- DNS Threat Intelligence Dashboard
-=============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>DNS Threat Intelligence</label>
-
-  <description>
-    Analyze DNS-based threat intelligence observed in Dragos-monitored OT
-    environments. 
-  </description>
-
+<form version="1.1" theme="light">
+  <label>Dragos DNS Threat Intelligence</label>
+  <description>Analyze DNS-based threat intelligence observed in Dragos-monitored OT
+    environments.</description>
   <!-- =============================================================== -->
   <!-- FILTERS                                                         -->
   <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- SUMMARY KPIs                                                    -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- DETAILED TABLE WITH ICONS                                       -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- TRENDING                                                       -->
+  <!-- =============================================================== -->
+  <fieldset submitButton="false"></fieldset>
   <row>
     <panel>
       <input type="time" token="time_range">
@@ -27,7 +24,6 @@
           <latest>now</latest>
         </default>
       </input>
-
       <input type="dropdown" token="severity">
         <label>Severity</label>
         <choice value="*">All</choice>
@@ -37,7 +33,6 @@
         <choice value="Low">Low</choice>
         <default>*</default>
       </input>
-
       <input type="dropdown" token="threat_type">
         <label>Threat Type</label>
         <choice value="*">All</choice>
@@ -49,10 +44,6 @@
       </input>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- SUMMARY KPIs                                                    -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>Threat Volume by Severity</title>
@@ -70,7 +61,6 @@
         <option name="charting.chart">column</option>
       </chart>
     </panel>
-
     <panel>
       <title>Top Threat Categories</title>
       <chart>
@@ -90,10 +80,6 @@
       </chart>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- DETAILED TABLE WITH ICONS                                       -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>DNS Threat Intelligence Events</title>
@@ -123,17 +109,10 @@
           <earliest>$time_range.earliest$</earliest>
           <latest>$time_range.latest$</latest>
         </search>
-
         <option name="count">20</option>
         <option name="wrap">true</option>
       </table>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- TRENDING                                                       -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>DNS Threat Trend</title>
       <chart>
@@ -151,5 +130,4 @@
       </chart>
     </panel>
   </row>
-
-</dashboard>
+</form>
