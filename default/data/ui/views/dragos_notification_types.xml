@@ -30,7 +30,7 @@ These values correspond to the `type` field returned by:
     <panel>
       <title>Dragos Notification Types</title>
       <html>
-        <![CDATA[
+        
         <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
           <tr>
             <th>Notification Type</th>
@@ -46,7 +46,7 @@ These values correspond to the `type` field returned by:
           <tr><td>Network</td></tr>
           <tr><td>System</td></tr>
         </table>
-        ]]>
+       
       </html>
     </panel>
   </row>
