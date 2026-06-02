@@ -22,13 +22,22 @@ DATA
 sourcetype = dragos:indicators
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Threat Intelligence — Executive Overview</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Threat Intelligence — Executive Overview</label>
   <!-- =============================================================== -->
   <!-- ROW 1: EXEC SEVERITY ROLLUP                                    -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 2: OT VS IT THREAT SPLIT                                   -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 3: KILL-CHAIN STAGE ROLLUPS                                -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 4: ACTIVITY GROUP HEATMAP                                  -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 5: TOP THREAT ACTORS (EXEC STRIP)                          -->
   <!-- =============================================================== -->
   <row>
     <panel>
@@ -54,12 +63,6 @@ sourcetype = dragos:indicators
         <option name="charting.legend.placement">right</option>
       </chart>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 2: OT VS IT THREAT SPLIT                                   -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>OT vs IT Threat Split</title>
       <chart>
@@ -80,10 +83,6 @@ sourcetype = dragos:indicators
       </chart>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 3: KILL-CHAIN STAGE ROLLUPS                                -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>Kill-Chain Stage Rollups</title>
@@ -102,12 +101,6 @@ sourcetype = dragos:indicators
         <option name="charting.legend.placement">none</option>
       </chart>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 4: ACTIVITY GROUP HEATMAP                                  -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>Activity Group Heatmap</title>
       <chart>
@@ -125,10 +118,6 @@ sourcetype = dragos:indicators
       </chart>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 5: TOP THREAT ACTORS (EXEC STRIP)                          -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>Top Threat Actors</title>
@@ -149,5 +138,4 @@ sourcetype = dragos:indicators
       </table>
     </panel>
   </row>
-
 </dashboard>
