@@ -52,11 +52,8 @@ Operational context:
 - tags{}
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Threat Intelligence</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Threat Intelligence</label>
   <row>
     <panel>
       <table>
@@ -94,5 +91,4 @@ Operational context:
       </table>
     </panel>
   </row>
-
 </dashboard>
