@@ -31,16 +31,21 @@ KEY QUESTIONS ANSWERED
 - Which accounts require immediate review?
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>User Activity & Aging</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos User Activity and Aging</label>
   <!-- =============================================================== -->
   <!-- ROW 1: EXECUTIVE SUMMARY METRICS                                -->
   <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 2: HIGH-RISK ACCOUNT INDICATORS                              -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 3: ACCOUNT AGE & ACTIVITY DRIFT                              -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 4: DETAILED REVIEW TABLE                                    -->
+  <!-- =============================================================== -->
   <row>
-
     <panel>
       <title>👤 Total Users</title>
       <single>
@@ -53,7 +58,6 @@ KEY QUESTIONS ANSWERED
         <option name="colorMode">block</option>
       </single>
     </panel>
-
     <panel>
       <title>✅ Active (≤ 30 days)</title>
       <single>
@@ -62,14 +66,13 @@ KEY QUESTIONS ANSWERED
             index=* sourcetype=dragos:users
             | eval last_login_epoch=strptime(lastLoginAt,"%Y-%m-%dT%H:%M:%SZ")
             | eval days_since_login=(now()-last_login_epoch)/86400
-            | where days_since_login <= 30
+            | where days_since_login = 30
             | stats count
           </query>
         </search>
         <option name="colorMode">block</option>
       </single>
     </panel>
-
     <panel>
       <title>⚠️ Dormant (31–90 days)</title>
       <single>
@@ -78,14 +81,13 @@ KEY QUESTIONS ANSWERED
             index=* sourcetype=dragos:users
             | eval last_login_epoch=strptime(lastLoginAt,"%Y-%m-%dT%H:%M:%SZ")
             | eval days_since_login=(now()-last_login_epoch)/86400
-            | where days_since_login > 30 AND days_since_login <= 90
+            | where days_since_login &gt; 30 AND days_since_login = 90
             | stats count
           </query>
         </search>
         <option name="colorMode">block</option>
       </single>
     </panel>
-
     <panel>
       <title>🚨 Stale (&gt; 90 days)</title>
       <single>
@@ -94,14 +96,13 @@ KEY QUESTIONS ANSWERED
             index=* sourcetype=dragos:users
             | eval last_login_epoch=strptime(lastLoginAt,"%Y-%m-%dT%H:%M:%SZ")
             | eval days_since_login=(now()-last_login_epoch)/86400
-            | where days_since_login > 90
+            | where days_since_login &gt; 90
             | stats count
           </query>
         </search>
         <option name="colorMode">block</option>
       </single>
     </panel>
-
     <panel>
       <title>❌ Never Logged In</title>
       <single>
@@ -115,14 +116,8 @@ KEY QUESTIONS ANSWERED
         <option name="colorMode">block</option>
       </single>
     </panel>
-
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 2: HIGH-RISK ACCOUNT INDICATORS                              -->
-  <!-- =============================================================== -->
   <row>
-
     <panel>
       <title>🔥 Privileged + Inactive</title>
       <table>
@@ -132,14 +127,13 @@ KEY QUESTIONS ANSWERED
             | eval last_login_epoch=strptime(lastLoginAt,"%Y-%m-%dT%H:%M:%SZ")
             | eval days_since_login=round((now()-last_login_epoch)/86400,0)
             | eval roles_str=tostring(roles)
-            | where match(roles_str,"admin|system|super") AND (isnull(days_since_login) OR days_since_login > 30)
+            | where match(roles_str,"admin|system|super") AND (isnull(days_since_login) OR days_since_login &gt; 30)
             | table username email roles ssoEnabled lastLoginAt days_since_login
             | sort - days_since_login
           </query>
         </search>
       </table>
     </panel>
-
     <panel>
       <title>🔓 SSO Disabled + Privileged</title>
       <table>
@@ -154,14 +148,8 @@ KEY QUESTIONS ANSWERED
         </search>
       </table>
     </panel>
-
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 3: ACCOUNT AGE & ACTIVITY DRIFT                              -->
-  <!-- =============================================================== -->
   <row>
-
     <panel>
       <title>🕒 Account Aging Distribution</title>
       <chart>
@@ -171,12 +159,12 @@ KEY QUESTIONS ANSWERED
             | eval created_epoch=strptime(createdAt,"%Y-%m-%dT%H:%M:%SZ")
             | eval account_age_days=round((now()-created_epoch)/86400,0)
             | eval age_bucket=case(
-                account_age_days <= 30,"0–30",
-                account_age_days <= 60,"31–60",
-                account_age_days <= 90,"61–90",
-                account_age_days <= 180,"91–180",
-                account_age_days <= 365,"181–365",
-                account_age_days > 365,">365"
+                account_age_days = 30,"0–30",
+                account_age_days = 60,"31–60",
+                account_age_days = 90,"61–90",
+                account_age_days = 180,"91–180",
+                account_age_days = 365,"181–365",
+                account_age_days &gt; 365,"&gt;365"
               )
             | stats count by age_bucket
           </query>
@@ -184,7 +172,6 @@ KEY QUESTIONS ANSWERED
         <option name="charting.chart">column</option>
       </chart>
     </panel>
-
     <panel>
       <title>🆕 New Privileged Users (Last 90 Days)</title>
       <table>
@@ -194,21 +181,13 @@ KEY QUESTIONS ANSWERED
             | eval created_epoch=strptime(createdAt,"%Y-%m-%dT%H:%M:%SZ")
             | eval account_age_days=(now()-created_epoch)/86400
             | eval roles_str=tostring(roles)
-            | where match(roles_str,"admin|system|super") AND account_age_days <= 90
+            | where match(roles_str,"admin|system|super") AND account_age_days = 90
             | table username email roles createdAt ssoEnabled
             | sort createdAt
           </query>
         </search>
       </table>
     </panel>
-
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 4: DETAILED REVIEW TABLE                                    -->
-  <!-- =============================================================== -->
-  <row>
-
     <panel>
       <title>📋 User Review Queue</title>
       <table>
@@ -221,8 +200,8 @@ KEY QUESTIONS ANSWERED
             | eval days_since_login=round((now()-last_login_epoch)/86400,0)
             | eval review_flag=case(
                 isnull(lastLoginAt),"❌ Never Logged In",
-                days_since_login > 180,"🚨 Long Inactive",
-                days_since_login > 90,"⚠️ Review Needed",
+                days_since_login &gt; 180,"🚨 Long Inactive",
+                days_since_login &gt; 90,"⚠️ Review Needed",
                 true(),"OK"
               )
             | table username email roles ssoEnabled createdAt lastLoginAt account_age_days days_since_login review_flag
@@ -232,7 +211,5 @@ KEY QUESTIONS ANSWERED
         <option name="wrap">true</option>
       </table>
     </panel>
-
   </row>
-
 </dashboard>
