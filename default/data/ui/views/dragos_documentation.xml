@@ -12,19 +12,25 @@ Splunk App usage. This view provides direct links to authoritative
 Dragos documentation and key references used by this app.
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Documentation</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Documentation</label>
   <!-- =============================================================== -->
   <!-- ROW 1: CORE DOCUMENTATION                                       -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 2: API REFERENCES                                           -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 3: OPERATIONS & ANALYSIS                                    -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 4: SPLUNK REFERENCES                                        -->
   <!-- =============================================================== -->
   <row>
     <panel>
       <title>Dragos OT Security Documentation</title>
       <html>
-        <![CDATA[
+       
         <ul>
           <li>
             <a href="https://www.dragos.com/platform/" target="_blank">
@@ -42,19 +48,13 @@ Dragos documentation and key references used by this app.
             </a>
           </li>
         </ul>
-        ]]>
+        
       </html>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 2: API REFERENCES                                           -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>API Reference</title>
       <html>
-        <![CDATA[
+        
         <ul>
           <li>
             <a href="https://portal.dragos.com/api/v1/doc/index.html" target="_blank">
@@ -77,19 +77,15 @@ Dragos documentation and key references used by this app.
             </a>
           </li>
         </ul>
-        ]]>
+       
       </html>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 3: OPERATIONS & ANALYSIS                                    -->
-  <!-- =============================================================== -->
   <row>
     <panel>
-      <title>Operations & Analysis</title>
+      <title>Operations and Analysis</title>
       <html>
-        <![CDATA[
+        
         <ul>
           <li>
             <a href="https://portal.dragos.com/api/v1/doc/detections/docs/index.html" target="_blank">
@@ -112,19 +108,13 @@ Dragos documentation and key references used by this app.
             </a>
           </li>
         </ul>
-        ]]>
+        
       </html>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 4: SPLUNK REFERENCES                                        -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>Splunk References</title>
       <html>
-        <![CDATA[
+       
         <ul>
           <li>
             <a href="https://docs.splunk.com/Documentation/Splunk/latest/Viz/XMLDashboardReference" target="_blank">
@@ -142,9 +132,8 @@ Dragos documentation and key references used by this app.
             </a>
           </li>
         </ul>
-        ]]>
+       
       </html>
     </panel>
   </row>
-
 </dashboard>
