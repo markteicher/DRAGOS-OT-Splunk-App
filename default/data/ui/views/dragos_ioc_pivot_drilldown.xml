@@ -1,43 +1,21 @@
-<!--
-=============================================================================
- default/data/ui/views/dragos_ioc_pivot_drilldown.xml
- Dragos OT Security for Splunk App
- IOC Pivot — Drilldown
-=============================================================================
-
-PURPOSE
-
-Single-IOC investigation dashboard used to pivot from an individual
-indicator (IP, domain, or URL) into related threat intelligence context.
-
-This view supports analyst workflows.
-
-ANALYST QUESTIONS ANSWERED
-
-- What other indicators are related to this IOC?
-- Where does this IOC sit in the kill chain?
-- Which activity groups are associated?
-- Is activity persistent or episodic over time?
-
-SCOPING
-
-User-selected IOC value via dashboard input.
-
-DATA SOURCE
-
-/api/v1/indicators
-sourcetype=dragos:indicators
-
-
-=============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>IOC Pivot — Drilldown</label>
-
+<form version="1.1" theme="light">
+  <label>Dragos IOC Pivot — Drilldown</label>
   <!-- =============================================================== -->
   <!-- INPUT: IOC VALUE                                               -->
   <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 1: RELATED INDICATORS                                      -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 2: KILL-CHAIN STAGE                                        -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 3: ACTIVITY GROUP ASSOCIATION                              -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 4: SIGHTINGS OVER TIME                                     -->
+  <!-- =============================================================== -->
+  <fieldset submitButton="false"></fieldset>
   <row>
     <panel>
       <input type="text" token="ioc_value">
@@ -45,10 +23,6 @@ sourcetype=dragos:indicators
       </input>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 1: RELATED INDICATORS                                      -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>Related Indicators</title>
@@ -68,12 +42,6 @@ sourcetype=dragos:indicators
         <option name="rowNumbers">false</option>
       </table>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 2: KILL-CHAIN STAGE                                        -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>Kill-Chain Stage</title>
       <chart>
@@ -92,10 +60,6 @@ sourcetype=dragos:indicators
       </chart>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 3: ACTIVITY GROUP ASSOCIATION                              -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>Associated Activity Groups</title>
@@ -115,12 +79,6 @@ sourcetype=dragos:indicators
         <option name="rowNumbers">false</option>
       </table>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 4: SIGHTINGS OVER TIME                                     -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>IOC Sightings Over Time</title>
       <chart>
@@ -137,5 +95,4 @@ sourcetype=dragos:indicators
       </chart>
     </panel>
   </row>
-
-</dashboard>
+</form>
