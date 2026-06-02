@@ -38,11 +38,8 @@ FIELDS
 - assets{}.zone
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Alerts</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Alerts</label>
   <row>
     <panel>
       <table>
@@ -79,5 +76,4 @@ FIELDS
       </table>
     </panel>
   </row>
-
 </dashboard>
