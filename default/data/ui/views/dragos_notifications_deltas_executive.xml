@@ -24,13 +24,13 @@ Data Source:
 - sourcetype: dragos:notifications
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Detection Trends (Executive)</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Detection Trends (Executive)</label>
   <!-- =============================================================== -->
   <!-- ROW 1: DAY OVER DAY                                             -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 2: VISUAL CONTEXT                                           -->
   <!-- =============================================================== -->
   <row>
     <panel>
@@ -56,10 +56,23 @@ Data Source:
         <option name="colorMode">block</option>
       </single>
     </panel>
-
-    <!-- ============================================================= -->
-    <!-- WEEK OVER WEEK                                                -->
-    <!-- ============================================================= -->
+    <panel>
+      <title>Detection Volume by Month</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=dragos:notifications
+            | spath updatedAt
+            | eval _time=strptime(updatedAt,"%Y-%m-%dT%H:%M:%SZ")
+            | timechart span=1mon count
+          </query>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
     <panel>
       <title>Week over Week (WoW)</title>
       <single>
@@ -83,10 +96,8 @@ Data Source:
         <option name="colorMode">block</option>
       </single>
     </panel>
-
-    <!-- ============================================================= -->
-    <!-- MONTH OVER MONTH                                              -->
-    <!-- ============================================================= -->
+  </row>
+  <row>
     <panel>
       <title>Month over Month (MoM)</title>
       <single>
@@ -111,26 +122,4 @@ Data Source:
       </single>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 2: VISUAL CONTEXT                                           -->
-  <!-- =============================================================== -->
-  <row>
-    <panel>
-      <title>Detection Volume by Month</title>
-      <chart>
-        <search>
-          <query>
-            index=* sourcetype=dragos:notifications
-            | spath updatedAt
-            | eval _time=strptime(updatedAt,"%Y-%m-%dT%H:%M:%SZ")
-            | timechart span=1mon count
-          </query>
-        </search>
-        <option name="charting.chart">column</option>
-        <option name="charting.legend.placement">none</option>
-      </chart>
-    </panel>
-  </row>
-
 </dashboard>
