@@ -79,11 +79,8 @@ Labels:
 - labels.AttributesLastObservedDate
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Assets</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Assets</label>
   <row>
     <panel>
       <table>
@@ -143,5 +140,4 @@ Labels:
       </table>
     </panel>
   </row>
-
 </dashboard>
