@@ -14,19 +14,25 @@ This view centralizes references to Dragos OT documentation, API
 references, and Splunk app usage information to support analysts,
 engineers, and administrators.
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Help</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Help</label>
   <!-- =============================================================== -->
   <!-- ROW 1: GETTING STARTED                                          -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 2: DRAGOS DOCUMENTATION                                     -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 3: SPLUNK APP USAGE                                         -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 4: SUPPORT                                                  -->
   <!-- =============================================================== -->
   <row>
     <panel>
       <title>Getting Started</title>
       <html>
-        <![CDATA[
+        
         <p>
           The Dragos OT Security for Splunk App integrates Dragos OT
           platform data directly into Splunk for monitoring, analysis,
@@ -37,19 +43,13 @@ engineers, and administrators.
           <li>Complete the setup wizard to configure connectivity</li>
           <li>Verify data ingestion using the Overview dashboard</li>
         </ul>
-        ]]>
+        
       </html>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 2: DRAGOS DOCUMENTATION                                     -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>Dragos Documentation</title>
       <html>
-        <![CDATA[
+        
         <ul>
           <li>
             <a href="https://portal.dragos.com" target="_blank">
@@ -67,19 +67,15 @@ engineers, and administrators.
             </a>
           </li>
         </ul>
-        ]]>
+        
       </html>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 3: SPLUNK APP USAGE                                         -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>Splunk App Usage</title>
       <html>
-        <![CDATA[
+       
         <ul>
           <li>
             Use <strong>Dashboards</strong> to review overall OT security posture
@@ -100,19 +96,13 @@ engineers, and administrators.
             Use <strong>Reports</strong> for executive and operational summaries
           </li>
         </ul>
-        ]]>
+        
       </html>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 4: SUPPORT                                                  -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>Support</title>
       <html>
-        <![CDATA[
+        
         <p>
           For Dragos OT product support, contact Dragos through your
           existing support agreements and channels.
@@ -123,9 +113,8 @@ engineers, and administrators.
             Splunk Documentation
           </a>
         </p>
-        ]]>
+      
       </html>
     </panel>
   </row>
-
 </dashboard>
