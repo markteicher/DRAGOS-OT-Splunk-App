@@ -23,13 +23,16 @@ GET /api/v1/indicators
 → sourcetype=dragos:indicators
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Web Threat Intelligence</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Web Threat Intelligence</label>
   <!-- =============================================================== -->
   <!-- ROW 1: DNS INDICATORS (DRILLDOWN ENTRY)                          -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 2: URL / WEB INDICATORS (DRILLDOWN ENTRY)                    -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 3: ALL IOC PIVOT ENTRY                                      -->
   <!-- =============================================================== -->
   <row>
     <panel>
@@ -47,26 +50,16 @@ GET /api/v1/indicators
             | sort - indicator_count
           </query>
         </search>
-
         <drilldown>
-          <link>
-            /app/dragos/dragos_dns_threat_intel_drilldown
-            ?form.domain=$row.value$
-          </link>
+          <link>/app/dragos/dragos_dns_threat_intel_drilldown
+            ?form.domain=$row.value$</link>
         </drilldown>
-
         <option name="wrap">false</option>
         <option name="rowNumbers">true</option>
       </table>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 2: URL / WEB INDICATORS (DRILLDOWN ENTRY)                    -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
-      <title>URL & Web Indicators</title>
+      <title>URL and Web Indicators</title>
       <table>
         <search>
           <query>
@@ -80,24 +73,16 @@ GET /api/v1/indicators
             | sort - indicator_count
           </query>
         </search>
-
         <drilldown>
-          <link>
-            /app/dragos/dragos_ioc_pivot_drilldown
+          <link>/app/dragos/dragos_ioc_pivot_drilldown
             ?form.ioc=$row.value$
-            &amp;form.type=url
-          </link>
+            &amp;form.type=url</link>
         </drilldown>
-
         <option name="wrap">false</option>
         <option name="rowNumbers">true</option>
       </table>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 3: ALL IOC PIVOT ENTRY                                      -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>IOC Pivot (IP / Domain / URL)</title>
@@ -114,19 +99,14 @@ GET /api/v1/indicators
             | head 50
           </query>
         </search>
-
         <drilldown>
-          <link>
-            /app/dragos/dragos_ioc_pivot_drilldown
+          <link>/app/dragos/dragos_ioc_pivot_drilldown
             ?form.ioc=$row.value$
-            &amp;form.type=$row.indicator_type$
-          </link>
+            &amp;form.type=$row.indicator_type$</link>
         </drilldown>
-
         <option name="wrap">false</option>
         <option name="rowNumbers">true</option>
       </table>
     </panel>
   </row>
-
 </dashboard>
