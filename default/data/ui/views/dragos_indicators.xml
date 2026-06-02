@@ -31,11 +31,8 @@ Top-level fields:
 - attack_techniques{}
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Indicators</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Indicators</label>
   <row>
     <panel>
       <table>
@@ -66,5 +63,4 @@ Top-level fields:
       </table>
     </panel>
   </row>
-
 </dashboard>
