@@ -1,40 +1,24 @@
-<!--
-=============================================================================
- default/data/ui/views/dragos_ingest_status.xml
- Dragos OT Security for Splunk App
- Ingest Status & Health
-=============================================================================
-
-PURPOSE
-
-Provides a comprehensive, SLA-aware view of Dragos data ingestion health
-across all collectors and sensors.
-
-
-FEATURES
-
-• Per-collector SLA thresholds (minutes)
-• Sensor-level ingest health (host + sourcetype)
-• OT vs IT ingest separation
-• Executive rollups with red / yellow / green indicators
-
-All logic is search-time only and transparent in SPL.
-
-DATA ASSUMPTIONS
-
-- index = dragos
-- sourcetypes follow dragos:* naming
-- _time reflects ingest time of each collector
-
-=============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Ingest Status</label>
-
+<form version="1.1" theme="light">
+  <label>Dragos Ingest Status</label>
   <!-- =============================================================== -->
   <!-- GLOBAL FILTERS                                                  -->
   <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- COLLECTOR SLA DEFINITIONS                                       -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- EXECUTIVE ROLLUP                                                -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- PER-COLLECTOR HEALTH                                            -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- SENSOR-LEVEL HEALTH                                             -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- OT VS IT INGEST SEPARATION                                      -->
+  <!-- =============================================================== -->
+  <fieldset submitButton="false"></fieldset>
   <row>
     <panel>
       <input type="time" token="time_range">
@@ -44,7 +28,6 @@ DATA ASSUMPTIONS
           <latest>now</latest>
         </default>
       </input>
-
       <input type="dropdown" token="site">
         <label>Sensor / Host</label>
         <choice value="*">All</choice>
@@ -60,10 +43,6 @@ DATA ASSUMPTIONS
       </input>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- COLLECTOR SLA DEFINITIONS                                       -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>Collector SLA Thresholds (Minutes)</title>
@@ -83,12 +62,6 @@ DATA ASSUMPTIONS
         <option name="wrap">true</option>
       </table>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- EXECUTIVE ROLLUP                                                -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>Executive Ingest Health Rollup</title>
       <table>
@@ -131,12 +104,6 @@ DATA ASSUMPTIONS
         </search>
       </table>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- PER-COLLECTOR HEALTH                                            -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>Collector Health (SLA Evaluated)</title>
       <table>
@@ -177,10 +144,6 @@ DATA ASSUMPTIONS
       </table>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- SENSOR-LEVEL HEALTH                                             -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>Sensor-Level Ingest Health</title>
@@ -210,12 +173,6 @@ DATA ASSUMPTIONS
         <option name="rowNumbers">true</option>
       </table>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- OT VS IT INGEST SEPARATION                                      -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>OT vs IT Ingest Separation</title>
       <table>
@@ -239,5 +196,4 @@ DATA ASSUMPTIONS
       </table>
     </panel>
   </row>
-
-</dashboard>
+</form>
