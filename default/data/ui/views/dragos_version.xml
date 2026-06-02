@@ -30,11 +30,8 @@ Expected fields (as ingested from the endpoint):
 
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Platform Version</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Platform Version</label>
   <row>
     <panel>
       <table>
@@ -58,5 +55,4 @@ Expected fields (as ingested from the endpoint):
       </table>
     </panel>
   </row>
-
 </dashboard>
