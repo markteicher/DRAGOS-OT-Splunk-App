@@ -44,18 +44,24 @@ NOTES
 - spath is used explicitly for JSON field extraction
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Users — Activity Deltas</label>
-
-  <description>
-    Executive change metrics for Dragos user posture derived from dragos:users
-    (DoD / WoW / MoM).
-  </description>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Users — Activity Deltas</label>
+  <description>Executive change metrics for Dragos user posture derived from dragos:users
+    (DoD / WoW / MoM).</description>
   <!-- =============================================================== -->
   <!-- ROW 1: TOTAL USERS DELTA                                       -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 2: PRIVILEGED ROLES DELTA                                  -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 3: SSO DISABLED DELTA                                      -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 4: NEVER LOGGED IN                                         -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 5: INACTIVITY BUCKETS                                      -->
   <!-- =============================================================== -->
   <row>
     <panel>
@@ -97,10 +103,6 @@ NOTES
       </table>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 2: PRIVILEGED ROLES DELTA                                  -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>🔐 Privileged Users (DoD / WoW / MoM)</title>
@@ -131,10 +133,6 @@ NOTES
       </table>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 3: SSO DISABLED DELTA                                      -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>🔓 SSO Disabled Users (DoD / WoW / MoM)</title>
@@ -163,12 +161,6 @@ NOTES
         </search>
       </table>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 4: NEVER LOGGED IN                                         -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>🕳️ Never Logged In</title>
       <table>
@@ -184,12 +176,6 @@ NOTES
         </search>
       </table>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 5: INACTIVITY BUCKETS                                      -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>⏳ Inactivity Buckets</title>
       <table>
@@ -218,5 +204,4 @@ NOTES
       </table>
     </panel>
   </row>
-
 </dashboard>
