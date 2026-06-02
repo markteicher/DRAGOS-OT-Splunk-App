@@ -16,13 +16,16 @@ Data source:
 - sourcetype: dragos:logs:error
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Error Logs</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Error Logs</label>
   <!-- =============================================================== -->
   <!-- ROW 1: ERROR VOLUME                                             -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 2: ERROR TYPES                                              -->
+  <!-- =============================================================== -->
+  <!-- =============================================================== -->
+  <!-- ROW 3: RECENT ERROR EVENTS                                      -->
   <!-- =============================================================== -->
   <row>
     <panel>
@@ -38,7 +41,6 @@ Data source:
         <option name="colorMode">block</option>
       </single>
     </panel>
-
     <panel>
       <title>Error Events Over Time</title>
       <chart>
@@ -53,10 +55,6 @@ Data source:
       </chart>
     </panel>
   </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 2: ERROR TYPES                                              -->
-  <!-- =============================================================== -->
   <row>
     <panel>
       <title>Errors by Type</title>
@@ -72,12 +70,6 @@ Data source:
         <option name="charting.legend.placement">none</option>
       </chart>
     </panel>
-  </row>
-
-  <!-- =============================================================== -->
-  <!-- ROW 3: RECENT ERROR EVENTS                                      -->
-  <!-- =============================================================== -->
-  <row>
     <panel>
       <title>Recent Error Events</title>
       <table>
@@ -100,5 +92,4 @@ Data source:
       </table>
     </panel>
   </row>
-
 </dashboard>
