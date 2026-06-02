@@ -32,11 +32,8 @@ Tag context:
 - tags{}.tag_type
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Products</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Products</label>
   <row>
     <panel>
       <table>
@@ -66,5 +63,4 @@ Tag context:
       </table>
     </panel>
   </row>
-
 </dashboard>
