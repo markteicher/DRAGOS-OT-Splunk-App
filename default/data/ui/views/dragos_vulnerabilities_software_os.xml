@@ -17,11 +17,8 @@ This view surfaces every vulnerability detection record ingested into Splunk
 and exposes all available fields for investigation, filtering, and analysis.
 
 =============================================================================
--->
-
-<dashboard version="1.1" theme="light">
-  <label>Software & OS Vulnerabilities</label>
-
+--><dashboard version="1.1" theme="light">
+  <label>Dragos Software and OS Vulnerabilities</label>
   <!-- =============================================================== -->
   <!-- ROW 1: VULNERABILITY DETECTIONS                                 -->
   <!-- =============================================================== -->
@@ -70,5 +67,4 @@ and exposes all available fields for investigation, filtering, and analysis.
       </table>
     </panel>
   </row>
-
 </dashboard>
